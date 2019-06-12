@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>blurimageview的基本使用和源码解析 | grant | not today</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="android,view">
+    <meta name="description" content="BlurImageView 的基本使用前言写作的题材来自于 像 Medium 那样在 Android device 上优雅地加载图片 源码在这里">
+<meta name="keywords" content="android,view">
+<meta property="og:type" content="article">
+<meta property="og:title" content="blurimageview的基本使用和源码解析">
+<meta property="og:url" content="http://yoursite.com/2016/04/24/blurimageview的基本使用和源码解析/index.html">
+<meta property="og:site_name" content="grant">
+<meta property="og:description" content="BlurImageView 的基本使用前言写作的题材来自于 像 Medium 那样在 Android device 上优雅地加载图片 源码在这里">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-14T03:27:13.290Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="blurimageview的基本使用和源码解析">
+<meta name="twitter:description" content="BlurImageView 的基本使用前言写作的题材来自于 像 Medium 那样在 Android device 上优雅地加载图片 源码在这里">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhuangguangtuan</h5>
+          <a href="mailto:zhuangguangtuan@gmail.com" title="zhuangguangtuan@gmail.com" class="mail">zhuangguangtuan@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/guangtuan" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about">
+                <i class="icon icon-lg icon-file"></i>
+                About
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">blurimageview的基本使用和源码解析</div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">blurimageview的基本使用和源码解析</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-04-24T10:42:03.000Z" itemprop="datePublished" class="page-time">
+  2016-04-24
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+
+<article id="post-blurimageview的基本使用和源码解析" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">blurimageview的基本使用和源码解析</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-04-24 18:42:03" datetime="2016-04-24T10:42:03.000Z" itemprop="datePublished">2016-04-24</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="BlurImageView-的基本使用"><a href="#BlurImageView-的基本使用" class="headerlink" title="BlurImageView 的基本使用"></a>BlurImageView 的基本使用</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>写作的题材来自于 <a href="http://gold.xitu.io/entry/5647624300b07eb0183a46fd" target="_blank" rel="noopener">像 Medium 那样在 Android device 上优雅地加载图片</a></p>
+<p><a href="https://github.com/wingjay/BlurImageView" target="_blank" rel="noopener">源码在这里</a></p>
+<a id="more"></a>
+<h3 id="简短的说明"><a href="#简短的说明" class="headerlink" title="简短的说明"></a>简短的说明</h3><p>一个图片加载相关的框架，通过预先加载小图片并且模糊化，加载好大图片之后进行替换，达到良好的视觉效果和用户体验。</p>
+<p>引用自 <a href="http://gold.xitu.io/entry/5647624300b07eb0183a46fd" target="_blank" rel="noopener">像 Medium 那样在 Android device 上优雅地加载图片</a></p>
+<blockquote>
+<p>同样采用 stackBlur 算法，实现了在 Android 上加载大图。即先加载一张小图，不到 1 KB, 本地模糊化并立即显示给用户；同时去加载大图，一旦加载完成，替换该模糊图片。</p>
+</blockquote>
+<p>因此，同一张图片，需要服务端提供低分辨率和高分辨率，这个控件的适用场景是 产品向用户提供高清大图，并且需要在加载的过程中给用户良好的体验。这个加载过程中，一共加载了两张图片，一张是低分辨率，一张是高分辨率，对于用户数据流量额外开销的疑问，在 <a href="https://github.com/wingjay/BlurImageView/issues/1" target="_blank" rel="noopener">这里</a> 作者也给出了回答。</p>
+<h3 id="简单的使用"><a href="#简单的使用" class="headerlink" title="简单的使用"></a>简单的使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">BlurImageView blurImageView = (BlurImageView) findViewById(R.id.blur_img);</span><br><span class="line"><span class="comment">// 小图片的地址</span></span><br><span class="line">String blurUrl = <span class="string">"xxx"</span>;</span><br><span class="line"><span class="comment">// 高清图片的地址</span></span><br><span class="line">String normalUrl = <span class="string">"xxx"</span>;</span><br><span class="line">blurImageView.setFullImageByUrl(blurUrl, normalUrl);</span><br></pre></td></tr></table></figure>
+<p>效果图 <a href="http://gold.xitu.io/entry/5647624300b07eb0183a46fd" target="_blank" rel="noopener">见这里</a></p>
+<h2 id="BlurImageView-源码解析"><a href="#BlurImageView-源码解析" class="headerlink" title="BlurImageView 源码解析"></a>BlurImageView 源码解析</h2><h3 id="关键文件"><a href="#关键文件" class="headerlink" title="关键文件"></a>关键文件</h3><ul>
+<li><code>BlurImageView.java</code> 即该控件</li>
+<li><code>FastBlurUtil.java</code> 封装好了 <code>StackBlur</code> 算法的辅助类</li>
+</ul>
+<h3 id="BlurImageView-java-分析"><a href="#BlurImageView-java-分析" class="headerlink" title="BlurImageView.java 分析"></a><code>BlurImageView.java</code> 分析</h3><p>以下是<code>BlurImageView.java</code> 的分析：</p>
+<p><code>BlurImageView</code> 继承自 <code>RelativeLayout</code>，首先查看构造函数中调用的 <code>init()</code> 方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    initUIL();</span><br><span class="line">    imageLoader = ImageLoader.getInstance();</span><br><span class="line"></span><br><span class="line">    initChildView();</span><br><span class="line">    initDisplayImageOptions();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>initUIL()</code> 方法，设置了 <code>ImageLoader</code> 的相关参数，由此可见这个控件加载图片的话，使用的也是大名鼎鼎的 <code>ImageLoader</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initUIL</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ImageLoaderConfiguration.Builder config = <span class="keyword">new</span> ImageLoaderConfiguration.Builder(mContext);</span><br><span class="line">    config.threadPriority(Thread.NORM_PRIORITY - <span class="number">2</span>);</span><br><span class="line">    config.denyCacheImageMultipleSizesInMemory();</span><br><span class="line">    config.diskCacheFileNameGenerator(<span class="keyword">new</span> Md5FileNameGenerator());</span><br><span class="line">    config.diskCacheSize(<span class="number">50</span> * <span class="number">1024</span> * <span class="number">1024</span>); <span class="comment">// 50 MiB</span></span><br><span class="line">    config.tasksProcessingOrder(QueueProcessingType.LIFO);</span><br><span class="line">    config.writeDebugLogs(); <span class="comment">// Remove for release app</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Initialize ImageLoader with configuration.</span></span><br><span class="line">    ImageLoader.getInstance().init(config.build());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而从 <code>initChildView()</code> 的代码中，不难看出， <code>BlurImageView</code> 分为两个部分：</p>
+<ul>
+<li>一个是用以显示加载进度的 <code>LoadingCircleProgressView</code></li>
+<li>一个是用以显示图片的 <code>ImageView</code></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initChildView</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    imageView = <span class="keyword">new</span> ImageView(mContext);</span><br><span class="line">    imageView.setLayoutParams(<span class="keyword">new</span> LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));</span><br><span class="line">    imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);</span><br><span class="line">    loadingCircleProgressView = <span class="keyword">new</span> LoadingCircleProgressView(mContext);</span><br><span class="line">    LayoutParams progressBarLayoutParams =</span><br><span class="line">                <span class="keyword">new</span> LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);</span><br><span class="line">    progressBarLayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);</span><br><span class="line">    loadingCircleProgressView.setLayoutParams(progressBarLayoutParams);</span><br><span class="line">    loadingCircleProgressView.setVisibility(GONE);</span><br><span class="line"></span><br><span class="line">    addView(imageView);</span><br><span class="line">    addView(loadingCircleProgressView);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接着看 <code>initDisplayImageOptions</code> 方法，可以看出这里针对 <code>ImageLoader</code> 设置了缓存到硬盘也就是存储卡的选项。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initDisplayImageOptions</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    displayImageOptions = <span class="keyword">new</span> DisplayImageOptions.Builder()</span><br><span class="line">        .cacheOnDisk(<span class="keyword">true</span>)</span><br><span class="line">        .considerExifParams(<span class="keyword">true</span>).bitmapConfig(Bitmap.Config.RGB_565)</span><br><span class="line">        .build();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再回到我们调用到的，用以加载图片的方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blurImageView.setFullImageByUrl(blurUrl, normalUrl);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFullImageByUrl</span><span class="params">(String blurImageUrl, String originImageUrl)</span> </span>&#123;</span><br><span class="line">    mBlurImageUrl = blurImageUrl;</span><br><span class="line">    mOriginImageUrl = originImageUrl;</span><br><span class="line">    cancelImageRequestForSafty();</span><br><span class="line">    imageLoader.loadImage(blurImageUrl, fullLoadingListener);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先是取消了之前在 <code>imageView</code> 上的加载的任务，追踪 <code>ImageLoader</code> 的源码，可以发现是直接将该任务从 <code>ImageLoader</code> 内部维护的队列中移除。</p>
+<p>接着，这里根据 <code>blurImageUrl</code> 也就是低分辨率的图片，先进行加载，并且对这次加载设置了监听，毫无疑问监听里的回调是继续加载大图片。</p>
+<p>那么我们来看 <code>fullLoadingListener</code> 的代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> SimpleImageLoadingListener fullLoadingListener = <span class="keyword">new</span> SimpleImageLoadingListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onLoadingComplete</span><span class="params">(String imageUri, View view, Bitmap loadedImage)</span> </span>&#123;</span><br><span class="line">        imageView.setImageBitmap(getBlurBitmap(loadedImage));</span><br><span class="line">        imageLoader.displayImage(mOriginImageUrl, imageView, displayImageOptions, <span class="keyword">null</span>, <span class="keyword">new</span> ImageLoadingProgressListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onProgressUpdate</span><span class="params">(String imageUri, View view, <span class="keyword">int</span> current, <span class="keyword">int</span> total)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (!enableProgress) &#123;</span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (current &lt; total) &#123;</span><br><span class="line">                    loadingCircleProgressView.setVisibility(VISIBLE);</span><br><span class="line">                    loadingCircleProgressView.setCurrentProgressRatio((<span class="keyword">float</span>) current / total);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    loadingCircleProgressView.setVisibility(GONE);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>所以，这个监听器的变量名叫 <code>fullLoadingListener</code>，也就是整个完整流程的监听器，在完成低分辨率图片的加载之后，调用了 <code>getBlurBitmap(loadedImage)</code> 方法，使用了 <code>StackBlur</code> 算法得到一个模糊后的图片。并且设置到 <code>imageView</code> 上进行显示，之后，继续加载大图。</p>
+<p>在加载大图的过程中有显示进度反馈，最后用大图替代了模糊的图片。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>总体来说，加载的工具基于 <code>ImageLoader</code>, 模糊算法采用的是 <code>StackBlur</code> ，整个控件需要研究的地方并不多，然而这两个用到的工具可研究的地方也非常庞大。</p>
+<p><code>BlurImageView</code> 不仅提供了一套完整的加载流程，也提供了其他的加载选项，实现过程大多类似，这里不一一给出，如</p>
+<ul>
+<li>从网络上，只加载模糊图片的方法 <code>setBlurImageByUrl(String blurImageUrl)</code></li>
+<li>从资源文件中，正常加载图片 <code>setOriginImageByRes(int originImageRes)</code></li>
+<li>从资源文件中，加载模糊图片 <code>setBlurImageByRes(int blurImageRes)</code></li>
+</ul>
+<p>由此可见，好的框架不仅仅是考虑了数据输出，还考虑了不同的数据输入，将这些统一实现之后，对外界暴露几个公共方法即可。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最終更新：<time datetime="2018-12-14T03:27:13.290Z" itemprop="dateUpdated">2018-12-14 11:27:13</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" alt="zhuangguangtuan">
+            zhuangguangtuan
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/view/">view</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2016/04/24/blurimageview的基本使用和源码解析/&title=《blurimageview的基本使用和源码解析》 — grant&pic=https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2016/04/24/blurimageview的基本使用和源码解析/&title=《blurimageview的基本使用和源码解析》 — grant&source=BlurImageView 的基本使用前言写作的题材来自于 像 Medium 那样在 Android device 上优雅地加载图片
+源码在这里" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/04/24/blurimageview的基本使用和源码解析/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《blurimageview的基本使用和源码解析》 — grant&url=http://yoursite.com/2016/04/24/blurimageview的基本使用和源码解析/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2016/04/24/blurimageview的基本使用和源码解析/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/05/01/注解框架roboguice和butterknife的对比/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">注解框架RoBoGuice和ButterKnife的对比</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/04/19/动态代理与retrofit/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">动态代理与Retrofit</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>このブログの内容物は<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja">クリエイティブ・コモンズ 表示 - 非営利 - 継承 4.0 国際ライセンスの下に提供されています</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>zhuangguangtuan &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2016/04/24/blurimageview的基本使用和源码解析/&title=《blurimageview的基本使用和源码解析》 — grant&pic=https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2016/04/24/blurimageview的基本使用和源码解析/&title=《blurimageview的基本使用和源码解析》 — grant&source=BlurImageView 的基本使用前言写作的题材来自于 像 Medium 那样在 Android device 上优雅地加载图片
+源码在这里" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/04/24/blurimageview的基本使用和源码解析/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《blurimageview的基本使用和源码解析》 — grant&url=http://yoursite.com/2016/04/24/blurimageview的基本使用和源码解析/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2016/04/24/blurimageview的基本使用和源码解析/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2016/04/24/blurimageview的基本使用和源码解析/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'grant's blog';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'grant's blog';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

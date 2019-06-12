@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Morea ccessible markup with display:contents | grant | not today</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="translate,frontend">
+    <meta name="description" content="翻译自 frondEndFocus-337 原文地址">
+<meta name="keywords" content="translate,frontend">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Morea ccessible markup with display:contents">
+<meta property="og:url" content="http://yoursite.com/2018/05/04/more-accessible-markup-with-display-contents/index.html">
+<meta property="og:site_name" content="grant">
+<meta property="og:description" content="翻译自 frondEndFocus-337 原文地址">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://hiddedevries.nl/perch/resources/example-layout-1.png">
+<meta property="og:image" content="https://hiddedevries.nl/perch/resources/example-layout-2.png">
+<meta property="og:image" content="https://hiddedevries.nl/perch/resources/without-display-contents-on-ul-it-is-a-grid-item-with-display-contents-its-children-are-grid-items-4.png">
+<meta property="og:updated_time" content="2018-11-19T00:43:01.519Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Morea ccessible markup with display:contents">
+<meta name="twitter:description" content="翻译自 frondEndFocus-337 原文地址">
+<meta name="twitter:image" content="https://hiddedevries.nl/perch/resources/example-layout-1.png">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhuangguangtuan</h5>
+          <a href="mailto:zhuangguangtuan@gmail.com" title="zhuangguangtuan@gmail.com" class="mail">zhuangguangtuan@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/guangtuan" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about">
+                <i class="icon icon-lg icon-file"></i>
+                About
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Morea ccessible markup with display:contents</div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Morea ccessible markup with display:contents</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-05-04T07:47:21.000Z" itemprop="datePublished" class="page-time">
+  2018-05-04
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+
+<article id="post-more-accessible-markup-with-display-contents" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Morea ccessible markup with display:contents</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-05-04 15:47:21" datetime="2018-05-04T07:47:21.000Z" itemprop="datePublished">2018-05-04</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ul>
+<li>翻译自 <a href="https://frontendfoc.us/issues/337" target="_blank" rel="noopener">frondEndFocus-337</a></li>
+<li><a href="https://hiddedevries.nl/en/blog/2018-04-21-more-accessible-markup-with-display-contents" target="_blank" rel="noopener">原文地址</a></li>
+</ul>
+<a id="more"></a>
+<p><strong>css grid 布局可以将元素变为一个网格，并且将它的 <em>直接子元素</em> 按照网格布局排列。扁平化的标签写起来更舒服，但会降低语义化的程度，这通常意味着对使用无障碍阅读的用户不友好。通过将 display 设置为 contents，我们可以将非直接子元素放在网格上，这样我们的布局扁平化和语义化兼具。下面我们来看看具体的做法吧。</strong></p>
+<p>在接下来的文章中，我将解释我所说的直接子元素和非直接子元素，以及展示我们是如何使用 <code>display: contents</code> 提升语义化程度的。注意：<em>现在的浏览器对它的支持还不够完善，下面会详细提到。</em></p>
+<h4 id="网格只对直接子元素起作用"><a href="#网格只对直接子元素起作用" class="headerlink" title="网格只对直接子元素起作用"></a>网格只对直接子元素起作用</h4><p>在网格布局中，只有直接子元素才会成为按照格子进行排列布局。为了照顾对这个语法不熟悉的读者，我们来举个例子，如图所示：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://hiddedevries.nl/perch/resources/example-layout-1.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>HTML 代码</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">"item"</span>&gt;</span>Penne with tomato sauce<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"item"</span>&gt;</span>This simple recipe has few ingredients but tastes delicious.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"item ingredients"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span>&gt;</span>You'll need<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span>&gt;</span>canned tomatoes<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span>&gt;</span>onions<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span>&gt;</span>garlic<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>CSS 代码</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span> &#123; </span><br><span class="line">  <span class="attribute">display</span>: grid; <span class="comment">/* element is now a grid container */</span></span><br><span class="line">  <span class="attribute">grid-template-columns</span>: <span class="built_in">repeat</span>( 4, 1fr );  <span class="comment">/* grid now has 4 columns */</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">.item</span>:<span class="built_in">nth-child</span>(1) &#123;</span><br><span class="line">  grid-columns: <span class="number">1</span> / <span class="number">2</span>; <span class="comment">/* Place item between grid line 1 and 2 */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.item</span><span class="selector-pseudo">:nth-child(2)</span> &#123;</span><br><span class="line">  <span class="attribute">grid-columns</span>: <span class="number">2</span> / <span class="number">4</span>; <span class="comment">/* Place item between grid line 2 and 4 */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.item</span><span class="selector-pseudo">:nth-child(3)</span> &#123;</span><br><span class="line">  <span class="attribute">grid-columns</span>: <span class="number">4</span> / <span class="number">5</span>; <span class="comment">/* Place item between line 4 and 5 */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我使用了 <code>.container</code>  和 <code>.item</code> 作为元素的类名，因为他们是网格布局的核心：网格布局有一个容器和一些格子。显然，使用你自己项目里的命名约定即可。</p>
+<p>这些元素是容器的直接子元素，所以我们可以按照网格布局的方式来排列这些元素，但当我要加入一个赞助商列表到界面上的时候，如图所示：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://hiddedevries.nl/perch/resources/example-layout-2.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>我们将列表加进去：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">"item"</span>&gt;</span>Penne with tomato sauce<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"item"</span>&gt;</span>This simple recipe has few ingredients but tastes delicious.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"item ingredients"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span>&gt;</span>You'll need<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span>&gt;</span>canned tomatoes<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span>&gt;</span>onions<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span>&gt;</span>garlic<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"item sponsors"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>Supermarket 1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>Supermarket 2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>但是我们没办法按照网格的方式排列我们的赞助商。因为只有 <code>&lt;ul&gt;</code> 标签是网格容器的直接子元素，而 <code>&lt;li&gt;</code> 标签并不是，它们没有参与到网格布局中来。但如果我强行要将赞助商列表放进网格布局中又会怎么样呢？</p>
+<h4 id="扁平化的标签"><a href="#扁平化的标签" class="headerlink" title="扁平化的标签"></a>扁平化的标签</h4><p>显然，我们可以将赞助商列表的 <code>&lt;ul&gt;</code> 标签移除掉，换成使用 <code>&lt;div&gt;</code> 标签。但这么做的话，就会让标签扁平化，这样做就是顾此失彼了。</p>
+<p>使用 <code>&lt;ul&gt;</code> 的好处很多：</p>
+<ul>
+<li>即使脱离了页面的上下文，它依旧是一个列表，比如在 Safari 的阅读模式里。</li>
+<li>关掉样式表的情况下，它会展示为一个列表。</li>
+<li>对于使用屏幕阅读器的用户，它是一个列表（屏幕阅读器大概会这么读： ”一个包含三个项目的列表“）。</li>
+</ul>
+<p>扁平化的标签会让我们失去这些好处。</p>
+<h4 id="用-display-contents-解决这个问题"><a href="#用-display-contents-解决这个问题" class="headerlink" title="用 display: contents 解决这个问题"></a>用 display: contents 解决这个问题</h4><p>使用 <code>display: contents</code> 我们既可以保留需要的标签，又可以使用网格布局。这个属性让元素 <em>看起来已经不存在了</em>。它没有生成一个盒子，所以 backgrounds, borders, 其它与盒子有关的属性也不会生效。网格布局的 placement 属性也不会。但是这些都会对它的子元素生效。<a href="https://drafts.csswg.org/css-display/#valdef-display-contents" target="_blank" rel="noopener">这个标准</a>表明元素的行为就好像被它的子元素用 […] 覆盖了。如果听不懂可以看看<a href="https://bitsofco.de/how-display-contents-works/" target="_blank" rel="noopener">这个</a>。（译注：这篇文章介绍了 display: content 是怎样工作的）</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://hiddedevries.nl/perch/resources/without-display-contents-on-ul-it-is-a-grid-item-with-display-contents-its-children-are-grid-items-4.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>如我们所愿，应用了 <code>display: contents</code>  的元素不再参与网格布局，而是它的内容参与了网格布局。所以我们的每一个赞助商出现在网格中，列表却没有。</p>
+<p>有一些边界情况，具体参考<a href="https://drafts.csswg.org/css-display/#unbox-html" target="_blank" rel="noopener">标准</a>。</p>
+<h4 id="对-display-contents-的浏览器实现的可访问性考虑"><a href="#对-display-contents-的浏览器实现的可访问性考虑" class="headerlink" title="对 display: contents 的浏览器实现的可访问性考虑"></a>对 display: contents 的浏览器实现的可访问性考虑</h4><p>对于使用无障碍阅读技术的人群，浏览器需要感知和可访问性相关的属性，元素的角色属性可以帮助无障碍阅读技术得知这些元素在页面中是什么角色。许多元素都会有内建的角色，比如列表会有给 <code>list</code> 的角色。</p>
+<p>这就是为什么支持 <code>display: contents</code> 的浏览器会出现问题，它们不仅仅将 <code>display: contents</code> 解释成和布局相关的东西，还从中获得语义。这是有问题的，看看我们的<a href="https://codepen.io/hidde/pen/gzbMeL" target="_blank" rel="noopener">赞助商例子</a>，它的角色不再是列表，而是一些奇怪的东西。</p>
+<p>下面我列举了在不同浏览器上的测试结果，在每一个用例中，<code>&lt;ul&gt;</code> 标签在没有设置 <code>display: contents</code> 的情况下，都能获得其正确的角色，反之不然。</p>
+<h5 id="Firefox-61"><a href="#Firefox-61" class="headerlink" title="Firefox 61"></a>Firefox 61</h5><p>列表的角色变成了 <code>text leaf</code>，<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1455357" target="_blank" rel="noopener">ff 的 bug 描述</a></p>
+<h5 id="Chrome-66"><a href="#Chrome-66" class="headerlink" title="Chrome 66"></a>Chrome 66</h5><p>无障碍访问无法感知到列表元素，<a href="https://bugs.chromium.org/p/chromium/issues/detail?id=835455" target="_blank" rel="noopener">chrome 的 bug 描述</a></p>
+<h5 id="Safari"><a href="#Safari" class="headerlink" title="Safari"></a>Safari</h5><p>列表没有无障碍访问的内容。<a href="https://bugreport.apple.com/web/?problemID=39630240" target="_blank" rel="noopener">Safari 的 bug 描述</a></p>
+<p><code>&lt;ul&gt;</code> 标签只是一个例子。事实上任何的元素如果使用 <code>display: contents</code> 这个属性都会遇到角色不能如预期的情况。</p>
+<p><em>如果你热衷于 <code>display:contents</code> 的可访问性，可以考虑在 bug 描述上评论，赞同等。</em>我希望浏览器能够优先处理这个。</p>
+<p>和这个问题有关的 <code>display</code> 属性影响了表格的语义化，详情戳<a href="http://adrianroselli.com/2018/02/tables-css-display-properties-and-aria.html" target="_blank" rel="noopener">这里</a>，和<a href="https://developer.paciellogroup.com/blog/2018/03/short-note-on-what-css-display-properties-do-to-table-semantics/" target="_blank" rel="noopener">这里</a>。</p>
+<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p>使用 <code>display: contents</code> 我们可以让非直接子元素参与到网格布局中，这让我们的标签更加语义化。标签的语义化程度决定了无障碍人群能够从我们的网页中得到多少。然而，现在浏览器对具有 <code>display: contents</code> 属性的标签的无障碍支持并不完善，具体表现为无法感知到标签的角色。</p>
+<p>我认为标签在无障碍阅读中的角色不应该在收到 <code>display: contents</code> 的影响而消失，这样我们就得不偿失了。我已经提交了 bug 给 Firefox, chromium 和 Safari，我希望他们的可访问性在使用了 <code>display: contents</code> 之后原封不动，这样我们才能提供良好的布局和良好的无障碍阅读功能。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最終更新：<time datetime="2018-11-19T00:43:01.519Z" itemprop="dateUpdated">2018-11-19 08:43:01</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" alt="zhuangguangtuan">
+            zhuangguangtuan
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/frontend/">frontend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/translate/">translate</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2018/05/04/more-accessible-markup-with-display-contents/&title=《Morea ccessible markup with display:contents》 — grant&pic=https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2018/05/04/more-accessible-markup-with-display-contents/&title=《Morea ccessible markup with display:contents》 — grant&source=
+翻译自 frondEndFocus-337
+原文地址
+" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2018/05/04/more-accessible-markup-with-display-contents/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Morea ccessible markup with display:contents》 — grant&url=http://yoursite.com/2018/05/04/more-accessible-markup-with-display-contents/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2018/05/04/more-accessible-markup-with-display-contents/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/05/23/rxjava-learn-note/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">rxjava-learn-note</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/10/28/web发布笔记/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">web发布笔记</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>このブログの内容物は<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja">クリエイティブ・コモンズ 表示 - 非営利 - 継承 4.0 国際ライセンスの下に提供されています</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>zhuangguangtuan &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2018/05/04/more-accessible-markup-with-display-contents/&title=《Morea ccessible markup with display:contents》 — grant&pic=https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2018/05/04/more-accessible-markup-with-display-contents/&title=《Morea ccessible markup with display:contents》 — grant&source=
+翻译自 frondEndFocus-337
+原文地址
+" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2018/05/04/more-accessible-markup-with-display-contents/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Morea ccessible markup with display:contents》 — grant&url=http://yoursite.com/2018/05/04/more-accessible-markup-with-display-contents/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2018/05/04/more-accessible-markup-with-display-contents/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2018/05/04/more-accessible-markup-with-display-contents/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'grant's blog';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'grant's blog';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

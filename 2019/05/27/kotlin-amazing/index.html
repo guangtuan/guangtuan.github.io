@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>kotlin 做题记录 | grant | not today</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="kotlin">
+    <meta name="description" content="很久之前接触了 kotlin，一直没有机会深入实践一下，最近在看《剑指 offer》这本书，就想着拿 kotlin 来做一下，熟悉一下这门语言，结果发现 kotlin 的语法很香。  题目描述 有两个排序的数组 a1，a2，a1 后面有足够的空间容纳 a2，把 a2 插入到 a1，并且所有的数字都是排序的  理解这个题目也给了解法提示，从数组的尾部开始操作，可以减少移动数组元素的次数。 解决过程">
+<meta name="keywords" content="kotlin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kotlin 做题记录">
+<meta property="og:url" content="http://yoursite.com/2019/05/27/kotlin-amazing/index.html">
+<meta property="og:site_name" content="grant">
+<meta property="og:description" content="很久之前接触了 kotlin，一直没有机会深入实践一下，最近在看《剑指 offer》这本书，就想着拿 kotlin 来做一下，熟悉一下这门语言，结果发现 kotlin 的语法很香。  题目描述 有两个排序的数组 a1，a2，a1 后面有足够的空间容纳 a2，把 a2 插入到 a1，并且所有的数字都是排序的  理解这个题目也给了解法提示，从数组的尾部开始操作，可以减少移动数组元素的次数。 解决过程">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-28T02:42:47.076Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="kotlin 做题记录">
+<meta name="twitter:description" content="很久之前接触了 kotlin，一直没有机会深入实践一下，最近在看《剑指 offer》这本书，就想着拿 kotlin 来做一下，熟悉一下这门语言，结果发现 kotlin 的语法很香。  题目描述 有两个排序的数组 a1，a2，a1 后面有足够的空间容纳 a2，把 a2 插入到 a1，并且所有的数字都是排序的  理解这个题目也给了解法提示，从数组的尾部开始操作，可以减少移动数组元素的次数。 解决过程">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhuangguangtuan</h5>
+          <a href="mailto:zhuangguangtuan@gmail.com" title="zhuangguangtuan@gmail.com" class="mail">zhuangguangtuan@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/guangtuan" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about">
+                <i class="icon icon-lg icon-file"></i>
+                About
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">kotlin 做题记录</div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">kotlin 做题记录</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-05-27T08:53:47.000Z" itemprop="datePublished" class="page-time">
+  2019-05-27
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+
+<article id="post-kotlin-amazing" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">kotlin 做题记录</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-05-27 16:53:47" datetime="2019-05-27T08:53:47.000Z" itemprop="datePublished">2019-05-27</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>很久之前接触了 kotlin，一直没有机会深入实践一下，最近在看《剑指 offer》这本书，就想着拿 kotlin 来做一下，熟悉一下这门语言，结果发现 kotlin 的语法很香。</p>
+<!-- read more -->
+<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><blockquote>
+<p>有两个排序的数组 a1，a2，<br>a1 后面有足够的空间容纳 a2，把 a2 插入到 a1，并且所有的数字都是排序的</p>
+</blockquote>
+<h3 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h3><p>这个题目也给了解法提示，从数组的尾部开始操作，可以减少移动数组元素的次数。</p>
+<h3 id="解决过程"><a href="#解决过程" class="headerlink" title="解决过程"></a>解决过程</h3><ul>
+<li>首先对于题目的定义，可以声明这么一个函数</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">mergeArray</span><span class="params">(a1: <span class="type">Array</span>&lt;<span class="type">Int</span>?&gt;, a2: <span class="type">Array</span>&lt;<span class="type">Int</span>&gt;)</span></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>a1 是一个整型数组，泛型 <code>Int</code> 加了一个 <code>?</code>，从参数定义，就能表示数组内部的元素有可能为空（题目描述 a1 后面有足够的空间容纳 a2），</li>
+<li>a2 的定义则表示数组内的元素都不为空。</li>
+<li>从参数上就进行了强制的约束，可以有效地防止外部调用的时候乱传。</li>
+</ul>
+</blockquote>
+<ul>
+<li><p>整体思路</p>
+<ul>
+<li>通过计算 a1 和 a2 中 <code>非空</code> 的元素数量，得出结果的长度</li>
+<li>根据结果的长度，得出开始操作的指针位置 pInsert，和开始比较的指针位置 p1, p2</li>
+<li>以 p1, p2 指针开始遍历<ul>
+<li>将 <code>a1[p1]</code>, <code>a2[p2]</code> 中较大的数字放到 <code>a1[pInsert]</code>，并且 p1/p2 和 pInsert 指针前移</li>
+<li>当 p2 先走到尽头 (p2 = 0), 则结束循环</li>
+<li>当 p1 先走到尽头 (p1 = 0), 将 a2 剩下的元素复制到 a1</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>代码如下</p>
+<blockquote>
+<p><code>a1[p1]</code> 后面加了两个 <code>!</code>, 虽然 a1 中的元素有可能为空的，但是在逻辑上，这个位置的 <code>a1[p1]</code> 不能为空，所以当代码有 bug 的时候，它会 “死给你看”。</p>
+</blockquote>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">mergeArray</span><span class="params">(a1: <span class="type">Array</span>&lt;<span class="type">Int</span>?&gt;, a2: <span class="type">Array</span>&lt;<span class="type">Int</span>&gt;)</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> l1 = getNotNullLength(a1)</span><br><span class="line">    <span class="keyword">var</span> p1 = l1 - <span class="number">1</span></span><br><span class="line">    <span class="keyword">var</span> p2 = a2.size - <span class="number">1</span></span><br><span class="line">    <span class="keyword">var</span> pInsert = l1 + a2.size - <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> (p1 &gt;= <span class="number">0</span> || p2 &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (p1 &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            copyRemain(a1, a2, pInsert, p2)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (p2 &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (a1[p1]!! &gt;= a2[p2]) &#123;</span><br><span class="line">            a1[pInsert] = a1[p1]</span><br><span class="line">            pInsert--</span><br><span class="line">            p1--</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            a1[pInsert] = a2[p2]</span><br><span class="line">            pInsert--</span><br><span class="line">            p2--</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>复制剩余的元素</li>
+</ul>
+<blockquote>
+<p>这里对传入的两个整数 pInsert 和 p 做了 copy, 是因为在 kotlin 里面，普通函数的参数是被 <code>val</code> 修饰，也就是不可变的，而做过一些项目的同学应该经历过 <strong>变量莫名其妙被修改之后找半天</strong> 的痛苦吧。</p>
+</blockquote>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">copyRemain</span><span class="params">(a1: <span class="type">Array</span>&lt;<span class="type">Int</span>?&gt;, a2: <span class="type">Array</span>&lt;<span class="type">Int</span>&gt;, pInsert: <span class="type">Int</span>, p: <span class="type">Int</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> pInsertCopy = pInsert</span><br><span class="line">    <span class="keyword">var</span> pCopy = p</span><br><span class="line">    <span class="keyword">while</span> (pCopy &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        a1[pInsertCopy] = a2[pCopy]</span><br><span class="line">        pInsertCopy--</span><br><span class="line">        pCopy--</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>后记</li>
+</ul>
+<blockquote>
+<p>其实按照函数式编程的理念，函数是不对输入做任何修改的，不过题目本来的要求就是修改 a1，所以。。。</p>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2019-05-28T02:42:47.076Z" itemprop="dateUpdated">2019-05-28 10:42:47</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" alt="zhuangguangtuan">
+            zhuangguangtuan
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kotlin/">kotlin</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/05/27/kotlin-amazing/&title=《kotlin 做题记录》 — grant&pic=https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/05/27/kotlin-amazing/&title=《kotlin 做题记录》 — grant&source=zhuangguangtuan's blog" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/05/27/kotlin-amazing/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《kotlin 做题记录》 — grant&url=http://yoursite.com/2019/05/27/kotlin-amazing/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/05/27/kotlin-amazing/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/05/01/about-product-thinking/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">我眼里的产品思维</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>zhuangguangtuan &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/05/27/kotlin-amazing/&title=《kotlin 做题记录》 — grant&pic=https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/05/27/kotlin-amazing/&title=《kotlin 做题记录》 — grant&source=zhuangguangtuan's blog" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/05/27/kotlin-amazing/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《kotlin 做题记录》 — grant&url=http://yoursite.com/2019/05/27/kotlin-amazing/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/05/27/kotlin-amazing/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2019/05/27/kotlin-amazing/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'grant's blog';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'grant's blog';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

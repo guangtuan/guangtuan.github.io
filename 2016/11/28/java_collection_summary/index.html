@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>java 集合类整理 | grant | not today</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="android,note,java">
+    <meta name="description" content="对 java 的集合类做一些整理，方便实际开发的时候选取合适的数据结构。">
+<meta name="keywords" content="android,note,java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java 集合类整理">
+<meta property="og:url" content="http://yoursite.com/2016/11/28/java_collection_summary/index.html">
+<meta property="og:site_name" content="grant">
+<meta property="og:description" content="对 java 的集合类做一些整理，方便实际开发的时候选取合适的数据结构。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-14T03:21:04.736Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java 集合类整理">
+<meta name="twitter:description" content="对 java 的集合类做一些整理，方便实际开发的时候选取合适的数据结构。">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhuangguangtuan</h5>
+          <a href="mailto:zhuangguangtuan@gmail.com" title="zhuangguangtuan@gmail.com" class="mail">zhuangguangtuan@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/guangtuan" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about">
+                <i class="icon icon-lg icon-file"></i>
+                About
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">java 集合类整理</div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">java 集合类整理</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-11-28T08:15:31.000Z" itemprop="datePublished" class="page-time">
+  2016-11-28
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+
+<article id="post-java_collection_summary" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">java 集合类整理</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-11-28 16:15:31" datetime="2016-11-28T08:15:31.000Z" itemprop="datePublished">2016-11-28</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>对 java 的集合类做一些整理，方便实际开发的时候选取合适的数据结构。</p>
+<a id="more"></a>
+<h3 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h3><p>内部包含一个数组用以放置元素，有一个整数值表示当前数组的实际大小。</p>
+<ul>
+<li><p>比较元素，采用元素的 <code>equals()</code> 方法。</p>
+</li>
+<li><p>查找元素，直接访问数组的下标即可。</p>
+</li>
+<li><p>插入元素，需要先计算数组大小是否足够，如果容量不够，扩张为原来的 1.5 倍，插入元素之后，需要进行 <code>System.arrayCopy()</code> 操作复制后面部分的操作。</p>
+</li>
+<li><p>删除元素，直接将目标位置的引用指向 null，删除元素之后，再进行 <code>System.arrayCopy()</code> 操作复制后面部分的数组。</p>
+</li>
+<li><p>容量控制，使用 <code>ensureCapacity(int min)</code> 方法指定一个比较合适的初始大小， 降低内部数据扩张的可能性。</p>
+</li>
+<li><p>容量调整，使用 <code>trimToSize()</code> 方法，重新分配一个当前 size 的数组空间。</p>
+</li>
+</ul>
+<h3 id="LinkedList"><a href="#LinkedList" class="headerlink" title="LinkedList"></a>LinkedList</h3><p>除了实现 List 接口之外，还实现了双端队列接口 <code>Deque</code> 可以当做<strong>先进先出的队列</strong>使用，也可以当做<strong>先进后出的栈</strong>使用，方便对头部和尾部的元素做各种操作。</p>
+<p>内部包含一个链表，每一个元素都持有上一个元素<code>pre</code>和下一个元素<code>next</code>的引用。</p>
+<ul>
+<li><p>比较元素，采用元素的 <code>equals()</code> 方法。</p>
+</li>
+<li><p>查找元素，根据传入的下标，先判断是靠近头部还是尾部，从头部或者尾部开始查找。</p>
+</li>
+<li><p>插入元素，找到指定的位置，将 pre 的 next 指向要插入的元素，将元素的 next 指向原本 pre 的 next。</p>
+</li>
+<li><p>删除元素，找到指定的元素 target，将 target-&gt;pre-&gt;next 指向 target-&gt;next 。</p>
+</li>
+<li><p>容量，因为是采用链表的结构存储，所以没有对容量的控制。</p>
+</li>
+</ul>
+<h3 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h3><p>HashMap 实现了 Map 接口，Map 是一种 key-value 映射的数据结构。</p>
+<p>内部的 Entry 也实现了 Map.Entry 接口，包含了 key-value 键值对，以及指向下一个元素的 next，和 HashMap 的关键部分，hash</p>
+<p>HashMap 内部维护了一个元素为 Entry 数组，数组的每一个元素都指向一个单向链表，在 <code>JDK8</code> 中，这个链表在长度超过 8 的时候会转换成 红黑树，以提高查找，插入，删除元素的效率。</p>
+<h4 id="容量扩展"><a href="#容量扩展" class="headerlink" title="容量扩展"></a>容量扩展</h4><p>HashMap 和 ArrayList 一样，也有扩展数组大小的机制，但是这个扩展的触发条件和扩展的倍数都不同于 ArrayList。</p>
+<p>触发扩展的时机由 capacity 和 loadFactor 决定。HashMap 默认的 capacity 是 16，默认的 loadFactor 是 0.75，当数组大小到了 16 * 0.75 = 12 的时候，就会触发扩展，这两个值可以在构造函数中进行指定。</p>
+<h4 id="添加元素"><a href="#添加元素" class="headerlink" title="添加元素"></a>添加元素</h4><p>计算 key 的 hash，根据 hash 找到应该存储在哪一个链表中，再插入这个链表中，如果 key 已经存在，更新已有的 value。</p>
+<p>然后计算是否需要扩展数组的大小。</p>
+<p>根据 key 计算 hash 算法会尽量使得结果均匀分配到每一个位置，以提高查找的效率。</p>
+<h4 id="查找元素"><a href="#查找元素" class="headerlink" title="查找元素"></a>查找元素</h4><p>计算传入的 key 得出 hash，根据 hash 找到数组中的对应的链表。</p>
+<p>在链表中遍历比较，先通过 hash 进行比较，因为 hash 是整型值，比较的效率会高于 equals 方法，当 hash 一样的时候，再通过 equals 进行比较。</p>
+<p>由于 hash 算法的设计，使得每一个链表中的元素数量都比较少，所以 HashMap 的查找效率会比较高。</p>
+<h4 id="检查是否包含-key-value"><a href="#检查是否包含-key-value" class="headerlink" title="检查是否包含 key value"></a>检查是否包含 key value</h4><p>根据 key 查找元素，结果为空则不包含这个 key。</p>
+<p>检查 value 则需要通过遍历来检查。</p>
+<h4 id="根据-key-删除-value"><a href="#根据-key-删除-value" class="headerlink" title="根据 key 删除 value"></a>根据 key 删除 value</h4><p>计算传入的 key 得到 hash，根据 hash 找到数组中对应的链表。</p>
+<p>在链表中遍历比较，先通过 hash 进行比较，hash 相同的时候，再通过 equals 方法进行比较。找到元素之后，采用链表中删除元素的方法，删除元素。</p>
+<h3 id="HashSet"><a href="#HashSet" class="headerlink" title="HashSet"></a>HashSet</h3><p>HashSet 实现的是 Set 接口，称为集合，集合中的元素不重复。</p>
+<p>内部持有一个 HashMap 的引用，这个 HashMap 的 key-value 中，value 是一个固定的对象。</p>
+<p>添加，删除，查找等操作都是对内部 HashMap 的添加，删除，查找等操作。</p>
+<p>HashMap 中，key 并不重复，所以 HashSet 可以做到内部的元素不重复。</p>
+<h3 id="TreeMap"><a href="#TreeMap" class="headerlink" title="TreeMap"></a>TreeMap</h3><p>TreeMap 是有序的 Map，排序是根据 key 来排序的。在构造方法中可以传入一个 <code>Comparator</code> 接口对象，这个接口决定了 key 的排序方式，如果不传入这个接口对象，那么这个 Map 的 key 应该实现 <code>Comparator</code> 接口。</p>
+<h4 id="其他接口"><a href="#其他接口" class="headerlink" title="其他接口"></a>其他接口</h4><p>TreeMap 实现了 <code>SortedMap</code> 接口和 <code>NavigableMap</code> 接口。</p>
+<p><code>SortedMap</code> 返回一部分的<strong>键值对</strong>，类似于 <a href="http://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000/0013868196352269f28f1f00aee485ea27e3c4e47f12bc7000" target="_blank" rel="noopener">Python 中的切片操作</a>，比如大于某个键，小于某个键，或者是在两个键的区间范围的键值对。</p>
+<p><code>NavigableMap</code> 根据给出的<strong>键</strong>查找邻近的键，或者邻近的键值对使用。</p>
+<h4 id="添加元素-1"><a href="#添加元素-1" class="headerlink" title="添加元素"></a>添加元素</h4><p>添加元素，当添加元素的时候，如果 key 的<strong>比较结果</strong>相同，则认为是相同的元素，对应的 value 只会保存最后一次添加的 value。</p>
+<h4 id="内部实现"><a href="#内部实现" class="headerlink" title="内部实现"></a>内部实现</h4><p>TreeMap 内部使用红黑树存储键值对，红黑树是一种大致上平衡的二叉树。（<a href="https://zh.wikipedia.org/wiki/%E7%BA%A2%E9%BB%91%E6%A0%91" target="_blank" rel="noopener">红黑树</a>）</p>
+<p>红黑树在每次添加元素之后，会进行<strong>平衡程度的调整</strong>，但是不会每一次都调整为绝对的平衡，（调整为绝对的平衡是 <a href="https://zh.wikipedia.org/wiki/AVL%E6%A0%91" target="_blank" rel="noopener">AVL 树</a>），因为旋转调整也会消耗性能，但是在很大程度上保证了查找元素的效率和添加删除元素的效率。</p>
+<h3 id="TreeSet"><a href="#TreeSet" class="headerlink" title="TreeSet"></a>TreeSet</h3><p>和 TreeMap 相对于 HashMap 一样，相对 HashSet，TreeSet 是有序的 HashSet。</p>
+<p>和 TreeMap 一样，TreeSet，要求提供一个 <code>Comparator</code> 接口对象用来做比较，或者传入的元素自身实现了 <code>Comparator</code> 接口。</p>
+<h4 id="添加元素-2"><a href="#添加元素-2" class="headerlink" title="添加元素"></a>添加元素</h4><p>Set 的元素不重复，也就是说，添加<strong>比较结果</strong>相同的元素，会保存第一个元素。</p>
+<h4 id="其他接口-1"><a href="#其他接口-1" class="headerlink" title="其他接口"></a>其他接口</h4><p>与 TreeMap 类似，TreeSet 实现了 <code>SortedSet</code> 接口，返回一些切片操作后的结果。</p>
+<p>同样，TreeSet 实现了 <code>NavigableSet</code> 接口，传入一个元素，查找邻近的元素。</p>
+<h4 id="内部实现-1"><a href="#内部实现-1" class="headerlink" title="内部实现"></a>内部实现</h4><p>和 HashMap-HashSet 的关系一样，TreeSet 基于 TreeMap 实现，所以有比较高的查找，删除，添加的效率。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最終更新：<time datetime="2018-12-14T03:21:04.736Z" itemprop="dateUpdated">2018-12-14 11:21:04</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" alt="zhuangguangtuan">
+            zhuangguangtuan
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/note/">note</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2016/11/28/java_collection_summary/&title=《java 集合类整理》 — grant&pic=https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2016/11/28/java_collection_summary/&title=《java 集合类整理》 — grant&source=对 java 的集合类做一些整理，方便实际开发的时候选取合适的数据结构。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/11/28/java_collection_summary/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《java 集合类整理》 — grant&url=http://yoursite.com/2016/11/28/java_collection_summary/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2016/11/28/java_collection_summary/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/07/28/vue-router源码阅读/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">vue-router 源码阅读</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/10/29/android bit map note/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">android 加载图片开发笔记</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>このブログの内容物は<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja">クリエイティブ・コモンズ 表示 - 非営利 - 継承 4.0 国際ライセンスの下に提供されています</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>zhuangguangtuan &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2016/11/28/java_collection_summary/&title=《java 集合类整理》 — grant&pic=https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2016/11/28/java_collection_summary/&title=《java 集合类整理》 — grant&source=对 java 的集合类做一些整理，方便实际开发的时候选取合适的数据结构。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/11/28/java_collection_summary/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《java 集合类整理》 — grant&url=http://yoursite.com/2016/11/28/java_collection_summary/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2016/11/28/java_collection_summary/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2016/11/28/java_collection_summary/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'grant's blog';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'grant's blog';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
