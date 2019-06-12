@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>IntentFilter 知识点总结 | grant | not today</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="android,activity">
+    <meta name="description" content="IntentFilter 知识点总结。">
+<meta name="keywords" content="android,activity">
+<meta property="og:type" content="website">
+<meta property="og:title" content="IntentFilter 知识点总结">
+<meta property="og:url" content="http://yoursite.com/drafts/intent_filter.html">
+<meta property="og:site_name" content="grant">
+<meta property="og:description" content="IntentFilter 知识点总结。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-14T03:20:57.602Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="IntentFilter 知识点总结">
+<meta name="twitter:description" content="IntentFilter 知识点总结。">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhuangguangtuan</h5>
+          <a href="mailto:zhuangguangtuan@gmail.com" title="zhuangguangtuan@gmail.com" class="mail">zhuangguangtuan@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/guangtuan" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about">
+                <i class="icon icon-lg icon-file"></i>
+                About
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">IntentFilter 知识点总结</div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header page-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">IntentFilter 知识点总结</h1>
+        <h5 class="subtitle">
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    <article class="page-article fade" itemprop="blogPage">
+        <div class="post-content page-content" id="page-content" itemprop="pageContent">
+            <p>IntentFilter 知识点总结。</p>
+<a id="more"></a>
+<p>Intent 分为两种，显式 intent 和 隐式的 intent，显式 intent 指定了包名和类名，而隐式 intent 没有。</p>
+<p>对于需要接受隐式 intent 的组件，我们需要指定过滤的规则，用 IntentFilter 对象来包裹过滤的信息。</p>
+<p>IntentFilter 的过滤信息有 action, category, data</p>
+<h3 id="action-的匹配规则"><a href="#action-的匹配规则" class="headerlink" title="action 的匹配规则"></a>action 的匹配规则</h3><p>一个过滤规则中可以含有多个 action，只要 <strong>intent 中的 action 的任意一个</strong> 和 <strong>过滤规则中的 action 的任意一个</strong> 匹配， 即为匹配成功。</p>
+<h3 id="category-的匹配规则"><a href="#category-的匹配规则" class="headerlink" title="category 的匹配规则"></a>category 的匹配规则</h3><p>一个过滤规则中可以含有多个 category，要求 <strong>intent 中的所有 category</strong> 和 <strong>过滤规则中的 部分/所有 category</strong> 匹配， 即为匹配成功。</p>
+<h3 id="data-的匹配规则"><a href="#data-的匹配规则" class="headerlink" title="data 的匹配规则"></a>data 的匹配规则</h3><p>与 action 类似，如果在过滤规则中定义了 action，那么 Intent 中必须也要有匹配的 data。</p>
+<p>data 包含有以下的数据</p>
+<ul>
+<li>mimeType 媒体类型</li>
+<li>URI<ul>
+<li><strong>Scheme</strong> URI 的模式，这里我理解为协议</li>
+<li><strong>Host</strong> 主机名</li>
+<li><strong>Port</strong> 端口号</li>
+<li><strong>Path</strong> 完整的路径</li>
+<li><strong>PathPattern</strong> 使用正则表达式匹配路径</li>
+<li><strong>PathPrefix</strong> 路径前缀</li>
+</ul>
+</li>
+</ul>
+<p>如</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">data</span> <span class="attr">android:mimeType</span>=<span class="string">"image/*"</span> /&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- more attrs --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>为了匹配这个规则，我们这样子写</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">intent.serDataAndType(Uri.parse(<span class="string">"file:url"</span>), <span class="string">"image/png"</span>);</span><br></pre></td></tr></table></figure>
+<p>另外，<code>setData()</code> 方法和 <code>setType()</code> 方法是互斥的，设置了 uri 会把 mimeType 清除，反之亦然。</p>
+<p>要设置完整的 uri 和 mimeType，调用 <code>setDataAndType(Uri data, String type)</code> 方法.</p>
+<h3 id="确保有组件可以收到隐式-intent-避免出错"><a href="#确保有组件可以收到隐式-intent-避免出错" class="headerlink" title="确保有组件可以收到隐式 intent 避免出错"></a>确保有组件可以收到隐式 intent 避免出错</h3><p>以 activity 为例， <code>PackageManager</code> 提供了以下方法， 这两个方法都返回 <strong>能够接收到这个隐式 intent 的 activity 集合或者信息。</strong></p>
+<blockquote>
+<p>其他的组件也有类似的方法。</p>
+</blockquote>
+<p>queryIntentActivities</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * @see #MATCH_DEFAULT_ONLY</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> List&lt;ResolveInfo&gt; <span class="title">queryIntentActivities</span><span class="params">(Intent intent, <span class="keyword">int</span> flags)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>resolveActivity</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> #GET_RESOLVED_FILTER</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> ResolveInfo <span class="title">resolveActivity</span><span class="params">(Intent intent, <span class="keyword">int</span> flags)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>我们看常量 <code>MATCH_DEFAULT_ONLY</code> 的定义：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Resolution and querying flag: if set, only filters that support the</span></span><br><span class="line"><span class="comment"> * &#123;<span class="doctag">@link</span> android.content.Intent#CATEGORY_DEFAULT&#125; will be considered for</span></span><br><span class="line"><span class="comment"> * matching.  This is a synonym for including the CATEGORY_DEFAULT in your</span></span><br><span class="line"><span class="comment"> * supplied Intent.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MATCH_DEFAULT_ONLY  = <span class="number">0x00010000</span>;</span><br></pre></td></tr></table></figure>
+<p>也就是说，需要保证不出错，建议将 flags 参数设置为 <code>MATCH_DEFAULT_ONLY</code>，<br>以排除无法接收隐式 intent 的 activity （也就是 category 中不包含 <code>android.intent.category.DEFAULT</code> 的 activity ），<br>这样子，如果这个方法能返回不为空的数据，则 startActivity() 方法一定会调用成功。</p>
+
+        </div>
+
+        
+
+        
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </article>
+    
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>このブログの内容物は<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja">クリエイティブ・コモンズ 表示 - 非営利 - 継承 4.0 国際ライセンスの下に提供されています</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>zhuangguangtuan &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/drafts/intent_filter.html&title=《IntentFilter 知识点总结》 — grant&pic=https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/drafts/intent_filter.html&title=《IntentFilter 知识点总结》 — grant&source=IntentFilter 知识点总结。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/drafts/intent_filter.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《IntentFilter 知识点总结》 — grant&url=http://yoursite.com/drafts/intent_filter.html&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/drafts/intent_filter.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/drafts/intent_filter.html" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'grant's blog';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'grant's blog';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

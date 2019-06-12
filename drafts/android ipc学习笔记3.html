@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>android ipc 学习笔记 3 使用 content provider, socket 进行进程间通信 | grant | not today</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="android,ipc">
+    <meta name="description" content="ContentProvider 是 Android 四大组件之一，主要用于不同的应用之间（也就是不同的进程之间）进行数据的共享。底层也是由 Binder 实现，这篇文章主要讲 ContentProvider 的基本用法，不涉及底层的实现。  Socket 在网络通信中的应用非常的广泛，同样也可以应用在 Android IPC 的场景之中，(网络通信本质上也是跨进程通信)，这篇文章记录使用 Soc">
+<meta name="keywords" content="android,ipc">
+<meta property="og:type" content="website">
+<meta property="og:title" content="android ipc 学习笔记 3 使用 content provider, socket 进行进程间通信">
+<meta property="og:url" content="http://yoursite.com/drafts/android ipc学习笔记3.html">
+<meta property="og:site_name" content="grant">
+<meta property="og:description" content="ContentProvider 是 Android 四大组件之一，主要用于不同的应用之间（也就是不同的进程之间）进行数据的共享。底层也是由 Binder 实现，这篇文章主要讲 ContentProvider 的基本用法，不涉及底层的实现。  Socket 在网络通信中的应用非常的广泛，同样也可以应用在 Android IPC 的场景之中，(网络通信本质上也是跨进程通信)，这篇文章记录使用 Soc">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-14T03:26:45.887Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="android ipc 学习笔记 3 使用 content provider, socket 进行进程间通信">
+<meta name="twitter:description" content="ContentProvider 是 Android 四大组件之一，主要用于不同的应用之间（也就是不同的进程之间）进行数据的共享。底层也是由 Binder 实现，这篇文章主要讲 ContentProvider 的基本用法，不涉及底层的实现。  Socket 在网络通信中的应用非常的广泛，同样也可以应用在 Android IPC 的场景之中，(网络通信本质上也是跨进程通信)，这篇文章记录使用 Soc">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhuangguangtuan</h5>
+          <a href="mailto:zhuangguangtuan@gmail.com" title="zhuangguangtuan@gmail.com" class="mail">zhuangguangtuan@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/guangtuan" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about">
+                <i class="icon icon-lg icon-file"></i>
+                About
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">android ipc 学习笔记 3 使用 content provider, socket 进行进程间通信</div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header page-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">android ipc 学习笔记 3 使用 content provider, socket 进行进程间通信</h1>
+        <h5 class="subtitle">
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    <article class="page-article fade" itemprop="blogPage">
+        <div class="post-content page-content" id="page-content" itemprop="pageContent">
+            <ul>
+<li><p>ContentProvider 是 Android 四大组件之一，主要用于不同的应用之间（也就是不同的进程之间）进行数据的共享。底层也是由 Binder 实现，这篇文章主要讲 ContentProvider 的基本用法，不涉及底层的实现。</p>
+</li>
+<li><p>Socket 在网络通信中的应用非常的广泛，同样也可以应用在 Android IPC 的场景之中，(网络通信本质上也是跨进程通信)，这篇文章记录使用 Socket 进行进程间通信的学习笔记。</p>
+</li>
+</ul>
+<a id="more"></a>
+<h2 id="ContentProvider"><a href="#ContentProvider" class="headerlink" title="ContentProvider"></a>ContentProvider</h2><h3 id="创建一个-ContentProvider"><a href="#创建一个-ContentProvider" class="headerlink" title="创建一个 ContentProvider"></a>创建一个 ContentProvider</h3><p>创建一个 ContentProvider 只需要继承类 ContentProvider，并且实现六个抽象方法。</p>
+<ul>
+<li><code>onCreate()</code> ContentProvider 被创建的时候调用，运行在主线程，一般 ContentProvider 采用 SQLite 存储和共享数据，但是也可以采用文件存储，甚至是内存存储，如果采用 SQLite 应该在这个方法进行初始化。</li>
+<li><code>getType()</code> 返回共享的数据的 MIME 类型，如音乐，图片等，可以留空。</li>
+<li><code>query()</code> 对应增删改查的查，运行在 Binder 线程中。</li>
+<li><code>update()</code> 对应增删改查的改，运行在 Binder 线程中。</li>
+<li><code>delete()</code> 对应增删改查的删，运行在 Binder 线程中。</li>
+<li><code>insert()</code> 对应增删改查的增，运行在 Binder 线程中。</li>
+</ul>
+<p>举个栗子</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BookProvider</span> <span class="keyword">extends</span> <span class="title">ContentProvider</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = BookProvider.class.getSimpleName();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String AUTH = <span class="string">"us.igrant.aidlcontentprovider.BookProvider"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> true if the provider was successfully loaded, false otherwise</span></span><br><span class="line"><span class="comment">     * 如果该 ContentProvider 成功加载，返回 true 否则返回 false</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Log.d(TAG, <span class="string">"onCreate: "</span> + Thread.currentThread().getName());</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Nullable</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Cursor <span class="title">query</span><span class="params">(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)</span> </span>&#123;</span><br><span class="line">        Log.d(TAG, <span class="string">"query: "</span> + Thread.currentThread().getName());</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Nullable</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getType</span><span class="params">(Uri uri)</span> </span>&#123;</span><br><span class="line">        Log.d(TAG, <span class="string">"getType: "</span> + Thread.currentThread().getName());</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Nullable</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Uri <span class="title">insert</span><span class="params">(Uri uri, ContentValues values)</span> </span>&#123;</span><br><span class="line">        Log.d(TAG, <span class="string">"insert: "</span> + Thread.currentThread().getName());</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">delete</span><span class="params">(Uri uri, String selection, String[] selectionArgs)</span> </span>&#123;</span><br><span class="line">        Log.d(TAG, <span class="string">"delete: "</span> + Thread.currentThread().getName());</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">update</span><span class="params">(Uri uri, ContentValues values, String selection, String[] selectionArgs)</span> </span>&#123;</span><br><span class="line">        Log.d(TAG, <span class="string">"update: "</span> + Thread.currentThread().getName());</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>并且在 AndroidManiFest.xml 中声明</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">provider</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:name</span>=<span class="string">".BookProvider"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:authorities</span>=<span class="string">"us.igrant.aidlcontentprovider.BookProvider"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:permission</span>=<span class="string">"us.igrant.BOOK_PROVIDER"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:process</span>=<span class="string">":provider"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>name</code> Provider 的名字。</li>
+<li><code>authorities</code> 可以理解为 Provider 的 URI 链接，采用包名 + 类名。</li>
+<li><code>permission</code> 权限，外部应用使用该 ContentProvider 的时候需要声明此权限，参考 Android 自带权限的写法，包名 + 全大写的权限名，除此之外，还有读写权限的区分，这里的 permission 包含了读和写的权限。</li>
+<li><code>process</code> 运行在独立的进程中。</li>
+</ul>
+<p>在 Activity 调用这个 ContentProvider</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@TargetApi</span>(Build.VERSION_CODES.JELLY_BEAN)</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 这里需要用到在 AndroidManiFest.xml 文件中声明的 auth</span></span><br><span class="line">        Uri uri = Uri.parse(<span class="string">"content://"</span> + BookProvider.AUTH);</span><br><span class="line">        getContentResolver().query(uri, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line">        getContentResolver().query(uri, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line">        getContentResolver().query(uri, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Log 输出在 provider 线程中，可以看出 query 方法运行在 Binder 线程池中，我们没有办法控制它运行在具体哪一个线程中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">06-26 04:27:21.393 22881-22881/? D/BookProvider: onCreate: main</span><br><span class="line">06-26 04:27:21.393 22881-22893/? D/BookProvider: query: Binder_2</span><br><span class="line">06-26 04:27:21.393 22881-22892/? D/BookProvider: query: Binder_1</span><br><span class="line">06-26 04:27:21.393 22881-22893/? D/BookProvider: query: Binder_2</span><br></pre></td></tr></table></figure>
+<h3 id="使用-URIMatcher-区分要操作的数据表"><a href="#使用-URIMatcher-区分要操作的数据表" class="headerlink" title="使用 URIMatcher 区分要操作的数据表"></a>使用 URIMatcher 区分要操作的数据表</h3><p>如果一个 ContentProvider 不只存储一类数据，那么需要使用 UriMatcher 来区分请求操作的是哪一种数据。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String BOOK_TABLE_NAME = <span class="string">"books"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> BOOK_URI_CODE = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String USER_TABLE_NAME = <span class="string">"users"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> USER_URI_CODE = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> UriMatcher mUriMatcher = <span class="keyword">new</span> UriMatcher(UriMatcher.NO_MATCH);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 静态加载，将 Code 和 tableName 一一对应起来</span></span><br><span class="line"><span class="keyword">static</span> &#123;</span><br><span class="line">    mUriMatcher.addURI(AUTH, BOOK_TABLE_NAME, BOOK_URI_CODE);</span><br><span class="line">    mUriMatcher.addURI(AUTH, USER_TABLE_NAME, USER_URI_CODE);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 根据 URI 获取到表名</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 在增删改查的方法中先调用这个方法得到表名，再进行下一步操作</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> uri</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">getTableName</span><span class="params">(Uri uri)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> code = mUriMatcher.match(uri);</span><br><span class="line">    <span class="keyword">if</span> (BOOK_URI_CODE == code) &#123;</span><br><span class="line">        <span class="keyword">return</span> BOOK_TABLE_NAME;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (USER_URI_CODE == code) &#123;</span><br><span class="line">        <span class="keyword">return</span> USER_TABLE_NAME;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>则访问数据表的 URI 变为</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Uri uri = Uri.parse(<span class="string">"content://"</span> + BookProvider.AUTH + <span class="string">"/"</span> + BookProvider.USER_TABLE_NAME);</span><br></pre></td></tr></table></figure>
+<p>这样子，就可以使用一个 ContentProvider 提供多种类型的数据了。</p>
+<blockquote>
+<p>最后，需要注意的是，ContentProvider 提供的数据操作，是多线程并发访问的，如果使用 SQLite，一个 SQLiteDataBase 对象内部则进行了线程同步，但是多个 SQLiteDataBase 或者说其他的存储方法，如内存，文件存储等，则需要做好同步的工作应对并发访问。</p>
+</blockquote>
+<h2 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h2><h3 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h3><p>使用 Java 原生的 API 即可建立一个 Socket 服务端，在 Android 中，网络通信需要放在子线程中，比如以下写法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">	        <span class="keyword">int</span> PORT = <span class="number">8888</span>;</span><br><span class="line">            ServerSocket serverSocket = <span class="keyword">new</span> ServerSocket(PORT);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).run();</span><br></pre></td></tr></table></figure>
+<p>接收一个 Socket 客户端</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">final</span> Socket client = serverSocket.accept();</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>获取客户端的输入流和输出流，用以读取客户端输入的信息和向客户端输出信息</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(client.getInputStream()));</span><br><span class="line"></span><br><span class="line">PrintWriter printWriter = <span class="keyword">new</span> PrintWriter(<span class="keyword">new</span> BufferedWriter( <span class="keyword">new</span> OutputStreamWriter(client.getOutputStream())), <span class="keyword">true</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><p>建立一个 Socket 连接，在 Android 中，网络通信需要放在子线程中，比如以下写法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String address = <span class="string">"localhost"</span>;</span><br><span class="line">        <span class="keyword">int</span> PORT = <span class="number">8888</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Socket socket = <span class="keyword">new</span> Socket(address, PORT);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).run();</span><br></pre></td></tr></table></figure>
+<p>获取客户端的输入流和输出流，用以读取服务端输入的信息和向服务端输出信息。</p>
+<p><strong>输入与输出都是相对的说法，服务端的输入即是客户端的输出，客户端的输入即是服务端的输出。</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(socket.getInputStream()));</span><br><span class="line"></span><br><span class="line">PrintWriter printWriter = <span class="keyword">new</span> PrintWriter(<span class="keyword">new</span> BufferedWriter( <span class="keyword">new</span> OutputStreamWriter(socket.getOutputStream())), <span class="keyword">true</span>);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>需要注意的是，不同于 AIDL 的通信方式，Socket 只能传递字节流，PrintWriter 也只支持基本数据类型和 String 类型，并没有对 Parcelable 对象进行支持。因此，常见的跨进程通信的场景，我们还是很少使用 Socket 来作为解决方案的。</p>
+</blockquote>
+
+        </div>
+
+        
+
+        
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </article>
+    
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>このブログの内容物は<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja">クリエイティブ・コモンズ 表示 - 非営利 - 継承 4.0 国際ライセンスの下に提供されています</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>zhuangguangtuan &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/drafts/android ipc学习笔记3.html&title=《android ipc 学习笔记 3 使用 content provider, socket 进行进程间通信》 — grant&pic=https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/drafts/android ipc学习笔记3.html&title=《android ipc 学习笔记 3 使用 content provider, socket 进行进程间通信》 — grant&source=
+ContentProvider 是 Android 四大组件之一，主要用于不同的应用之间（也就是不同的进程之间）进行数据的共享。底层也是由 Binder..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/drafts/android ipc学习笔记3.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《android ipc 学习笔记 3 使用 content provider, socket 进行进程间通信》 — grant&url=http://yoursite.com/drafts/android ipc学习笔记3.html&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/drafts/android ipc学习笔记3.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/drafts/android ipc学习笔记3.html" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'grant's blog';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'grant's blog';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

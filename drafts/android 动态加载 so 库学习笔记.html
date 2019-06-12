@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>android 动态加载 so 库学习笔记 | grant | not today</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="android,dynamic_load">
+    <meta name="description" content="动态加载 so 库关于动态加载 so 库，这篇文章 有很详细的讲解，这里只贴出部分学习笔记。">
+<meta name="keywords" content="android,dynamic_load">
+<meta property="og:type" content="website">
+<meta property="og:title" content="android 动态加载 so 库学习笔记">
+<meta property="og:url" content="http://yoursite.com/drafts/android 动态加载 so 库学习笔记.html">
+<meta property="og:site_name" content="grant">
+<meta property="og:description" content="动态加载 so 库关于动态加载 so 库，这篇文章 有很详细的讲解，这里只贴出部分学习笔记。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-14T03:28:01.541Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="android 动态加载 so 库学习笔记">
+<meta name="twitter:description" content="动态加载 so 库关于动态加载 so 库，这篇文章 有很详细的讲解，这里只贴出部分学习笔记。">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhuangguangtuan</h5>
+          <a href="mailto:zhuangguangtuan@gmail.com" title="zhuangguangtuan@gmail.com" class="mail">zhuangguangtuan@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/guangtuan" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about">
+                <i class="icon icon-lg icon-file"></i>
+                About
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">android 动态加载 so 库学习笔记</div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header page-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">android 动态加载 so 库学习笔记</h1>
+        <h5 class="subtitle">
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    <article class="page-article fade" itemprop="blogPage">
+        <div class="post-content page-content" id="page-content" itemprop="pageContent">
+            <h2 id="动态加载-so-库"><a href="#动态加载-so-库" class="headerlink" title="动态加载 so 库"></a>动态加载 so 库</h2><p>关于动态加载 so 库，<a href="https://segmentfault.com/a/1190000004062899" target="_blank" rel="noopener">这篇文章</a> 有很详细的讲解，这里只贴出部分学习笔记。</p>
+<a id="more"></a>
+<p>System 类有两个加载 so 库的方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * See &#123;<span class="doctag">@link</span> Runtime#load&#125;.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">load</span><span class="params">(String pathName)</span> </span>&#123;</span><br><span class="line">    Runtime.getRuntime().load(pathName, VMStack.getCallingClassLoader());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * See &#123;<span class="doctag">@link</span> Runtime#loadLibrary&#125;.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">loadLibrary</span><span class="params">(String libName)</span> </span>&#123;</span><br><span class="line">    Runtime.getRuntime().loadLibrary(libName, VMStack.getCallingClassLoader());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>load(String pathName)</code> 从 so 库的路径加载 so 库</li>
+<li><code>loadLibrary(String libName)</code> 根据 so 库的名字加载 so 库（系统在安装应用的时候，扫描包内是否存在 so 库，并且复制到对应的标准的内部存储路径中，所以可以根据 so 库的名字加载）</li>
+</ul>
+<p>所以一个可行的动态加载 so 库的思路是，从网上下载需要的 so 库，复制到内部存储（外部存储中的文件没有可执行的权限），再使用 <code>loadLibrary(String libName)</code> 方法加载 so 库。</p>
+<h2 id="为使用-Realm-的应用瘦身"><a href="#为使用-Realm-的应用瘦身" class="headerlink" title="为使用 Realm 的应用瘦身"></a>为使用 Realm 的应用瘦身</h2><p>Realm 是一个工作在 navtive 层的帮助开发者对数据进行本地存储的框架。</p>
+<p>虽然工作在 native 层给程序运行的效率带来了很大的提高，但因为需要支持不同的 CPU 架构，所以引用了 Realm 的应用的包体积，也不可避免的增大了许多。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">➜  lib  <span class="built_in">pwd</span></span><br><span class="line">/home/grant/Desktop/app-debug/lib</span><br><span class="line">➜  lib  tree</span><br><span class="line">.</span><br><span class="line">├── arm64-v8a</span><br><span class="line">│   └── librealm-jni.so</span><br><span class="line">├── armeabi</span><br><span class="line">│   └── librealm-jni.so</span><br><span class="line">├── armeabi-v7a</span><br><span class="line">│   └── librealm-jni.so</span><br><span class="line">├── mips</span><br><span class="line">│   └── librealm-jni.so</span><br><span class="line">├── x86</span><br><span class="line">│   └── librealm-jni.so</span><br><span class="line">└── x86_64</span><br><span class="line">    └── librealm-jni.so</span><br><span class="line"></span><br><span class="line">6 directories, 6 files</span><br></pre></td></tr></table></figure>
+<p>我们可以看到，解压安装包以后，lib 目录下存在六份 so 文件，但是</p>
+<blockquote>
+<p>Android 包管理器安装 APK 时，会自动选择 APK 包中为对应系统 ABI 预编译好的 .so 文件，如果在对应的 lib/ABI 目录中存在 .so 文件的话。</p>
+</blockquote>
+<p>所以，实际上安装包上的六个 so 库，对于用户的手机来说，只有一个是会被安装，并且起作用的。</p>
+<p>那么，其他的五个 so 库实际上是多余的，如果能够从安装包中去掉多余的五个 so 库，就可以达到为 APK 瘦身的目的。</p>
+<p>我们如何得知系统支持何种 ABI 架构？使用 Android 自带的 API 即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@TargetApi</span>(Build.VERSION_CODES.LOLLIPOP)</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">getSupportABIS</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String[] supportedAbis = Build.SUPPORTED_ABIS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们再来看 Realm 是如何加载 so 库的。</p>
+<p>查看 Realm 的源码，<code>io.realm.internal.Realm$loadLibrary</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">loadLibrary</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (libraryIsLoaded) &#123;</span><br><span class="line">        <span class="comment">// 如果库已经加载过了，则返回，避免多次加载</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (osIsWindows()) &#123;</span><br><span class="line">        loadLibraryWindows();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        String jnilib;</span><br><span class="line">        String debug = System.getenv(<span class="string">"REALM_JAVA_DEBUG"</span>);</span><br><span class="line">        <span class="keyword">if</span> (debug == <span class="keyword">null</span> || debug.isEmpty()) &#123;</span><br><span class="line">            jnilib = <span class="string">"realm-jni"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            jnilib = <span class="string">"realm-jni-dbg"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        System.loadLibrary(jnilib);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 在这里将标识位更改为 true</span></span><br><span class="line">    libraryIsLoaded = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">    Version.coreLibVersionCompatible(<span class="keyword">true</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们可以在自定义 Application 中先于 Realm 框架</p>
+<ul>
+<li>获取系统支持的 ABI 架构</li>
+<li>下载我们需要的 so 库，复制到内部存储，使用动态加载的办法加载 so 库中</li>
+<li>使用反射修改 <code>libraryIsLoaded</code> 变量的值为 true，避免二次加载</li>
+<li>手动调用 <code>Version.coreLibVersionCompatible(true);</code> 方法</li>
+</ul>
+<p>这样子，在编译过后的 APK 中，我们可以将对应的 so 库都删除掉，在用户首次使用应用的时候，使用动态加载的方法加载 so 库，从而达到为应用瘦身的目的。</p>
+
+        </div>
+
+        
+
+        
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </article>
+    
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>このブログの内容物は<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja">クリエイティブ・コモンズ 表示 - 非営利 - 継承 4.0 国際ライセンスの下に提供されています</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>zhuangguangtuan &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/drafts/android 动态加载 so 库学习笔记.html&title=《android 动态加载 so 库学习笔记》 — grant&pic=https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/drafts/android 动态加载 so 库学习笔记.html&title=《android 动态加载 so 库学习笔记》 — grant&source=动态加载 so 库关于动态加载 so 库，这篇文章 有很详细的讲解，这里只贴出部分学习笔记。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/drafts/android 动态加载 so 库学习笔记.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《android 动态加载 so 库学习笔记》 — grant&url=http://yoursite.com/drafts/android 动态加载 so 库学习笔记.html&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/drafts/android 动态加载 so 库学习笔记.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/drafts/android 动态加载 so 库学习笔记.html" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'grant's blog';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'grant's blog';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

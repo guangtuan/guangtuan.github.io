@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>contentprovider的启动过程 | grant | not today</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="android,note">
+    <meta name="description" content="这篇文章为读书笔记，主要内容是 ContentProvider 的启动过程。">
+<meta name="keywords" content="android,note">
+<meta property="og:type" content="website">
+<meta property="og:title" content="contentprovider的启动过程">
+<meta property="og:url" content="http://yoursite.com/drafts/content_provider_work_process.html">
+<meta property="og:site_name" content="grant">
+<meta property="og:description" content="这篇文章为读书笔记，主要内容是 ContentProvider 的启动过程。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-14T03:27:25.505Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="contentprovider的启动过程">
+<meta name="twitter:description" content="这篇文章为读书笔记，主要内容是 ContentProvider 的启动过程。">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhuangguangtuan</h5>
+          <a href="mailto:zhuangguangtuan@gmail.com" title="zhuangguangtuan@gmail.com" class="mail">zhuangguangtuan@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/guangtuan" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about">
+                <i class="icon icon-lg icon-file"></i>
+                About
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">contentprovider的启动过程</div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header page-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">contentprovider的启动过程</h1>
+        <h5 class="subtitle">
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    <article class="page-article fade" itemprop="blogPage">
+        <div class="post-content page-content" id="page-content" itemprop="pageContent">
+            <p>这篇文章为读书笔记，主要内容是 ContentProvider 的启动过程。</p>
+<a id="more"></a>
+<h2 id="方法入口"><a href="#方法入口" class="headerlink" title="方法入口"></a>方法入口</h2><h3 id="进程启动"><a href="#进程启动" class="headerlink" title="进程启动"></a>进程启动</h3><p>AMS 启动一个进程的时候调用了 <code>startProcessLocked()</code> 方法，在这个方法内有一段代码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (entryPoint == <span class="keyword">null</span>) entryPoint = <span class="string">"android.app.ActivityThread"</span>;</span><br><span class="line">Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, <span class="string">"Start proc: "</span> +</span><br><span class="line">        app.processName);</span><br><span class="line">checkTime(startTime, <span class="string">"startProcess: asking zygote to start proc"</span>);</span><br><span class="line">Process.ProcessStartResult startResult = Process.start(entryPoint,</span><br><span class="line">        app.processName, uid, uid, gids, debugFlags, mountExternal,</span><br><span class="line">        app.info.targetSdkVersion, app.info.seinfo, requiredAbi, instructionSet,</span><br><span class="line">        app.info.dataDir, entryPointArgs);</span><br></pre></td></tr></table></figure>
+<p>这段代码中调用了 <code>Process#start()</code> 方法，加载了类 <code>ActivityThread</code>，我们知道 java 程序的入口是静态的 main 方法，这在 Android 中也一样。</p>
+<h3 id="ActivityThread-main"><a href="#ActivityThread-main" class="headerlink" title="ActivityThread#main()"></a><code>ActivityThread#main()</code></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    ActivityThread thread = <span class="keyword">new</span> ActivityThread();</span><br><span class="line">    thread.attach(<span class="keyword">false</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (sMainThreadHandler == <span class="keyword">null</span>) &#123;</span><br><span class="line">        sMainThreadHandler = thread.getHandler();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">false</span>) &#123;</span><br><span class="line">        Looper.myLooper().setMessageLogging(<span class="keyword">new</span></span><br><span class="line">                LogPrinter(Log.DEBUG, <span class="string">"ActivityThread"</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// End of event ActivityThreadMain.</span></span><br><span class="line">    Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);</span><br><span class="line">    <span class="comment">// 开始消息循环</span></span><br><span class="line">    Looper.loop();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Main thread loop unexpectedly exited"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="ActivityThread-attach"><a href="#ActivityThread-attach" class="headerlink" title="ActivityThread#attach()"></a><code>ActivityThread#attach()</code></h3><p>在 ActivityThread 的 attach 方法中，调用了 <code>IActivityManager#attachApplication()</code> 将 AMS 和 Application 绑定起来.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> IActivityManager mgr = ActivityManagerNative.getDefault();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    mgr.attachApplication(mAppThread);</span><br><span class="line">&#125; <span class="keyword">catch</span> (RemoteException ex) &#123;</span><br><span class="line">    <span class="comment">// Ignore</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>AMS 的 <code>attachApplication()</code> 方法实际调用了 <code>attachApplicationLocked()</code> 方法</p>
+</li>
+<li><p>继而调用了 <code>IApplicationThread#bindApplicaion()</code>，</p>
+</li>
+<li><p>接着通过发送一个 Message 对象到内部的 Handler 的子类 H，</p>
+</li>
+<li><p>调用了 <code>ActivityThread#handleBindApplication()</code>，在这个方法里完成了 Application 和 ContentProvider 的创建。</p>
+</li>
+</ul>
+<h2 id="handleBindApplication-方法的详情"><a href="#handleBindApplication-方法的详情" class="headerlink" title="handleBindApplication() 方法的详情"></a>handleBindApplication() 方法的详情</h2><h3 id="创建-ContextImpl-和-Instrumention"><a href="#创建-ContextImpl-和-Instrumention" class="headerlink" title="创建 ContextImpl 和 Instrumention"></a>创建 ContextImpl 和 Instrumention</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ContextImpl instrContext = ContextImpl.createAppContext(<span class="keyword">this</span>, pi);</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    java.lang.ClassLoader cl = instrContext.getClassLoader();</span><br><span class="line">    mInstrumentation = (Instrumentation)</span><br><span class="line">        cl.loadClass(data.instrumentationName.getClassName()).newInstance();</span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(</span><br><span class="line">        <span class="string">"Unable to instantiate instrumentation "</span></span><br><span class="line">        + data.instrumentationName + <span class="string">": "</span> + e.toString(), e);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">mInstrumentation.init(<span class="keyword">this</span>, instrContext, appContext,</span><br><span class="line">   <span class="keyword">new</span> ComponentName(ii.packageName, ii.name), data.instrumentationWatcher,</span><br><span class="line">   data.instrumentationUiAutomationConnection);</span><br></pre></td></tr></table></figure>
+<h3 id="创建-Application"><a href="#创建-Application" class="headerlink" title="创建 Application"></a>创建 Application</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Application app = data.info.makeApplication(data.restrictedBackupMode, <span class="keyword">null</span>);</span><br><span class="line">mInitialApplication = app;</span><br></pre></td></tr></table></figure>
+<h3 id="启动当前进程的-ContentProvider-并且调用-onCreate-方法"><a href="#启动当前进程的-ContentProvider-并且调用-onCreate-方法" class="headerlink" title="启动当前进程的 ContentProvider 并且调用 onCreate() 方法"></a>启动当前进程的 ContentProvider 并且调用 onCreate() 方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">List&lt;ProviderInfo&gt; providers = data.providers;</span><br><span class="line"><span class="keyword">if</span> (providers != <span class="keyword">null</span>) &#123;</span><br><span class="line">    installContentProviders(app, providers);</span><br><span class="line">    <span class="comment">// For process that contains content providers, we want to</span></span><br><span class="line">    <span class="comment">// ensure that the JIT is enabled "at some point".</span></span><br><span class="line">    mH.sendEmptyMessageDelayed(H.ENABLE_JIT, <span class="number">10</span>*<span class="number">1000</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>installContentProviders()</code> 方法的详情</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">installContentProviders</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    Context context, List&lt;ProviderInfo&gt; providers)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> ArrayList&lt;IActivityManager.ContentProviderHolder&gt; results =</span><br><span class="line">        <span class="keyword">new</span> ArrayList&lt;IActivityManager.ContentProviderHolder&gt;();</span><br><span class="line">    <span class="comment">// 遍历 ProviderInfo 对象</span></span><br><span class="line">    <span class="keyword">for</span> (ProviderInfo cpi : providers) &#123;</span><br><span class="line">        <span class="keyword">if</span> (DEBUG_PROVIDER) &#123;</span><br><span class="line">            StringBuilder buf = <span class="keyword">new</span> StringBuilder(<span class="number">128</span>);</span><br><span class="line">            buf.append(<span class="string">"Pub "</span>);</span><br><span class="line">            buf.append(cpi.authority);</span><br><span class="line">            buf.append(<span class="string">": "</span>);</span><br><span class="line">            buf.append(cpi.name);</span><br><span class="line">            Log.i(TAG, buf.toString());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 启动这些 Provider</span></span><br><span class="line">        IActivityManager.ContentProviderHolder cph = installProvider(context, <span class="keyword">null</span>, cpi,</span><br><span class="line">                <span class="keyword">false</span> <span class="comment">/*noisy*/</span>, <span class="keyword">true</span> <span class="comment">/*noReleaseNeeded*/</span>, <span class="keyword">true</span> <span class="comment">/*stable*/</span>);</span><br><span class="line">        <span class="keyword">if</span> (cph != <span class="keyword">null</span>) &#123;</span><br><span class="line">            cph.noReleaseNeeded = <span class="keyword">true</span>;</span><br><span class="line">            results.add(cph);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 发布到 AMS 中</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        ActivityManagerNative.getDefault().publishContentProviders(</span><br><span class="line">            getApplicationThread(), results);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (RemoteException ex) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>installProvider()</code> 方法的详情，通过类加载器加载了相应的 ContentProvider</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> java.lang.ClassLoader cl = c.getClassLoader();</span><br><span class="line">localProvider = (ContentProvider)cl.</span><br><span class="line">    loadClass(info.name).newInstance();</span><br><span class="line">provider = localProvider.getIContentProvider();</span><br><span class="line"><span class="keyword">if</span> (provider == <span class="keyword">null</span>) &#123;</span><br><span class="line">    Slog.e(TAG, <span class="string">"Failed to instantiate class "</span> +</span><br><span class="line">          info.name + <span class="string">" from sourceDir "</span> +</span><br><span class="line">          info.applicationInfo.sourceDir);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (DEBUG_PROVIDER) Slog.v(</span><br><span class="line">    TAG, <span class="string">"Instantiating local provider "</span> + info.name);</span><br><span class="line"><span class="comment">// XXX Need to create the correct context for this provider.</span></span><br><span class="line">localProvider.attachInfo(c, info);</span><br></pre></td></tr></table></figure>
+<p><code>ContentProvider#attachInfo()</code> 方法的详情，在这里设置了 ContentProvider 的编写者在 manifest 文件中设置的一些属性，并且调用了 <code>onCreate()</code> 方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">attachInfo</span><span class="params">(Context context, ProviderInfo info, <span class="keyword">boolean</span> testing)</span> </span>&#123;</span><br><span class="line">    mNoPerms = testing;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Only allow it to be set once, so after the content service gives</span></span><br><span class="line"><span class="comment">     * this to us clients can't change it.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">if</span> (mContext == <span class="keyword">null</span>) &#123;</span><br><span class="line">        mContext = context;</span><br><span class="line">        <span class="keyword">if</span> (context != <span class="keyword">null</span>) &#123;</span><br><span class="line">            mTransport.mAppOpsManager = (AppOpsManager) context.getSystemService(</span><br><span class="line">                    Context.APP_OPS_SERVICE);</span><br><span class="line">        &#125;</span><br><span class="line">        mMyUid = Process.myUid();</span><br><span class="line">        <span class="keyword">if</span> (info != <span class="keyword">null</span>) &#123;</span><br><span class="line">            setReadPermission(info.readPermission);</span><br><span class="line">            setWritePermission(info.writePermission);</span><br><span class="line">            setPathPermissions(info.pathPermissions);</span><br><span class="line">            mExported = info.exported;</span><br><span class="line">            mSingleUser = (info.flags &amp; ProviderInfo.FLAG_SINGLE_USER) != <span class="number">0</span>;</span><br><span class="line">            setAuthorities(info.authority);</span><br><span class="line">        &#125;</span><br><span class="line">        ContentProvider.<span class="keyword">this</span>.onCreate();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="最后是调用-Application-的-onCreate-方法"><a href="#最后是调用-Application-的-onCreate-方法" class="headerlink" title="最后是调用 Application 的 onCreate() 方法"></a>最后是调用 Application 的 onCreate() 方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    mInstrumentation.callApplicationOnCreate(app);</span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!mInstrumentation.onException(app, e)) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(</span><br><span class="line">            <span class="string">"Unable to create application "</span> + app.getClass().getName()</span><br><span class="line">            + <span class="string">": "</span> + e.toString(), e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>另外，在 <code>installProvider()</code> 方法中，用到的 provider 对象是 IContentProvider 类型，和 ContentProvider 对应，与 BroadcastReceiver Service 等相类似。因此 ContentProvider 的 crud 方法都是跨进程地工作。</p>
+</blockquote>
+
+        </div>
+
+        
+
+        
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </article>
+    
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>このブログの内容物は<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja">クリエイティブ・コモンズ 表示 - 非営利 - 継承 4.0 国際ライセンスの下に提供されています</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>zhuangguangtuan &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/drafts/content_provider_work_process.html&title=《contentprovider的启动过程》 — grant&pic=https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/drafts/content_provider_work_process.html&title=《contentprovider的启动过程》 — grant&source=这篇文章为读书笔记，主要内容是 ContentProvider 的启动过程。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/drafts/content_provider_work_process.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《contentprovider的启动过程》 — grant&url=http://yoursite.com/drafts/content_provider_work_process.html&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/drafts/content_provider_work_process.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/drafts/content_provider_work_process.html" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'grant's blog';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'grant's blog';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

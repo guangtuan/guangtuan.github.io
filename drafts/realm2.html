@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Realm初步实践２ | grant | not today</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="android,realm">
+    <meta name="description" content="继续上一篇的内容，这篇文章主要讲 Realm 的工作方式。">
+<meta name="keywords" content="android,realm">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Realm初步实践２">
+<meta property="og:url" content="http://yoursite.com/drafts/realm2.html">
+<meta property="og:site_name" content="grant">
+<meta property="og:description" content="继续上一篇的内容，这篇文章主要讲 Realm 的工作方式。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-14T03:21:16.985Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Realm初步实践２">
+<meta name="twitter:description" content="继续上一篇的内容，这篇文章主要讲 Realm 的工作方式。">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhuangguangtuan</h5>
+          <a href="mailto:zhuangguangtuan@gmail.com" title="zhuangguangtuan@gmail.com" class="mail">zhuangguangtuan@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/guangtuan" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about">
+                <i class="icon icon-lg icon-file"></i>
+                About
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Realm初步实践２</div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header page-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Realm初步实践２</h1>
+        <h5 class="subtitle">
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    <article class="page-article fade" itemprop="blogPage">
+        <div class="post-content page-content" id="page-content" itemprop="pageContent">
+            <p>继续上一篇的内容，这篇文章主要讲 Realm 的工作方式。</p>
+<a id="more"></a>
+<h2 id="编译时的工作，生成-ProxyInterface-和-Proxy"><a href="#编译时的工作，生成-ProxyInterface-和-Proxy" class="headerlink" title="编译时的工作，生成 ProxyInterface 和 Proxy"></a>编译时的工作，生成 ProxyInterface 和 Proxy</h2><p>既然在工程的 gradle 文件中声明了插件和编译路径</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: <span class="string">'realm-android'</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">classpath</span> <span class="string">"io.realm:realm-gradle-plugin:0.88.3"</span></span><br></pre></td></tr></table></figure>
+<p>那么很明显，Realm 是在编译时候做了工作的，我们可以在 <code>app/build/generated/source/apt/debug</code> 中找到痕迹。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">➜  debug  <span class="built_in">pwd</span></span><br><span class="line">/path/to/project/app/build/generated/<span class="built_in">source</span>/apt/debug</span><br><span class="line">➜  debug  tree</span><br><span class="line">.</span><br><span class="line">└── io</span><br><span class="line">    └── realm</span><br><span class="line">        ├── DefaultRealmModule.java</span><br><span class="line">        ├── DefaultRealmModuleMediator.java</span><br><span class="line">        ├── PersonRealmProxyInterface.java</span><br><span class="line">        ├── PersonRealmProxy.java</span><br></pre></td></tr></table></figure>
+<p>毫无疑问，<code>PersonRealmProxyInterface.java</code> 和 <code>PersonRealmProxy.java</code> 是 Realm 在编译时生成的文件。</p>
+<h2 id="对-ProxyInterface-和-Proxy-进行分析"><a href="#对-ProxyInterface-和-Proxy-进行分析" class="headerlink" title="对 ProxyInterface 和 Proxy 进行分析"></a>对 ProxyInterface 和 Proxy 进行分析</h2><h3 id="ProxyInterface"><a href="#ProxyInterface" class="headerlink" title="ProxyInterface"></a>ProxyInterface</h3><p><code>PersonRealmProxyInterface</code> 是接口的声明，包含了 get 方法和 set 方法。这里的 get 方法和 set 方法代理了对应 model 的 get 方法和 set 方法，稍后会给出说明。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">PersonRealmProxyInterface</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> realmGet$id();</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> realmSet$id(<span class="keyword">int</span> value);</span><br><span class="line">    <span class="keyword">public</span> String realmGet$name();</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> realmSet$name(String value);</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> realmGet$age();</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> realmSet$age(<span class="keyword">int</span> value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h3><p><code>PersonRealmProxy</code> 是接口的实现，同时实现了很多通用的方法，Realm 对象会在操作 Model 的时候，调用到这些方法。</p>
+<ul>
+<li>createOrUpdateUsingJsonObject()</li>
+<li>createUsingJsonStream()</li>
+<li>copyOrUpdate()</li>
+<li>copy()</li>
+<li>createDetachedCopy()</li>
+<li>…more</li>
+</ul>
+<p><code>PersonRealmProxy.java</code> 的声明：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PersonRealmProxy</span> <span class="keyword">extends</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">RealmObjectProxy</span>, <span class="title">PersonRealmProxyInterface</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个类继承了 <code>Person</code>，并且实现了动态生成的 <code>PersonRealmProxyInterface.java</code> 接口和这个接口代理的 set 方法和 get 方法。</p>
+<p>而 另外一个实现的接口，<code>RealmObjectProxy.java</code> 是一个空接口，用来更方便地标示这个类是 Realm 在编译时候产生的，当然，在 Java 8 的环境下，可以将通用的静态方法放在这个空接口中。</p>
+<p>空接口在这里的应用也给了我们一点启示，</p>
+<blockquote>
+<p>如在 Android 中里，如果是遵循标准的 ActionBar 开发的二级页面，一般会把 ActionBar 的左上角设置为返回的箭头，这里给出一个思路。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">SecondPage</span> </span>&#123;</span><br><span class="line">    <span class="comment">// empty interface</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    	<span class="comment">// ... other init opts</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> <span class="keyword">instanceof</span> SecondPage) &#123;</span><br><span class="line">            setActionBarBackArrow();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样子，只要是二级页面，我们只需要实现 <code>SecondPage.java</code> 这个空接口就行了。</p>
+<h2 id="Model-和-ModelRealmProxy-之间的调用"><a href="#Model-和-ModelRealmProxy-之间的调用" class="headerlink" title="Model 和 ModelRealmProxy 之间的调用"></a>Model 和 ModelRealmProxy 之间的调用</h2><p>以 createObject() 方法为例，分析 Realm 操作 Model 的时候，具体的调用过程。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">public</span> &lt;E extends RealmObject&gt; <span class="function">E <span class="title">createObject</span><span class="params">(Class&lt;E&gt; clazz)</span> </span>&#123;</span><br><span class="line">    checkIfValid();</span><br><span class="line">    <span class="comment">// look here</span></span><br><span class="line">    Table table = getTable(clazz);</span><br><span class="line">    <span class="keyword">long</span> rowIndex = table.addEmptyRow();</span><br><span class="line">    <span class="keyword">return</span> get(clazz, rowIndex);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第一行是检查是否合法，第二行是将对 Person 操作转换成 PersonRealmProxy 的重要操作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">@Deprecated</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Table <span class="title">getTable</span><span class="params">(Class&lt;? extends RealmObject&gt; clazz)</span> </span>&#123;</span><br><span class="line">    Table table = classToTable.get(clazz);</span><br><span class="line">    <span class="keyword">if</span> (table == <span class="keyword">null</span>) &#123;</span><br><span class="line">        clazz = Util.getOriginalModelClass(clazz);</span><br><span class="line">        <span class="comment">// look here</span></span><br><span class="line">        table = sharedGroupManager.getTable(configuration.getSchemaMediator().getTableName(clazz));</span><br><span class="line">        classToTable.put(clazz, table);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> table;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中<code>configuration.getSchemaMediator().getTableName(clazz)</code> 是关键部分，这里的 SchemaMediator 是一个重要角色，如果不知道，就得先看看基础使用啦。</p>
+<p>SchemaMediator 是一个 abstract 类，Realm 在编译的时候给出了默认实现。</p>
+<p><code>DefaultRealmModuleMediator.java</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getTableName</span><span class="params">(Class&lt;? extends RealmObject&gt; clazz)</span> </span>&#123;</span><br><span class="line">    checkClass(clazz);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// look here</span></span><br><span class="line">    <span class="keyword">if</span> (clazz.equals(Person.class)) &#123;</span><br><span class="line">        <span class="keyword">return</span> PersonRealmProxy.getTableName();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> getMissingProxyClassException(clazz);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的 getTable() 方法，直接就将 Person 和 PersonRealmProxy 对应起来了。</p>
+<p>再回来看 createObject() 方法，这里返回的是 get(clazz, rowIndex)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">public</span> &lt;E extends RealmObject&gt; <span class="function">E <span class="title">createObject</span><span class="params">(Class&lt;E&gt; clazz)</span> </span>&#123;</span><br><span class="line">    checkIfValid();</span><br><span class="line">    Table table = getTable(clazz);</span><br><span class="line">    <span class="keyword">long</span> rowIndex = table.addEmptyRow();</span><br><span class="line">    <span class="comment">// look here</span></span><br><span class="line">    <span class="keyword">return</span> get(clazz, rowIndex);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>来看这个 get(clazz, rowIndex) 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;E extends RealmObject&gt; <span class="function">E <span class="title">get</span><span class="params">(Class&lt;E&gt; clazz, <span class="keyword">long</span> rowIndex)</span> </span>&#123;</span><br><span class="line">    Table table = schema.getTable(clazz);</span><br><span class="line">    UncheckedRow row = table.getUncheckedRow(rowIndex);</span><br><span class="line">    <span class="comment">// look here</span></span><br><span class="line">    E result = configuration.getSchemaMediator().newInstance(clazz, schema.getColumnInfo(clazz));</span><br><span class="line">    result.row = row;</span><br><span class="line">    result.realm = <span class="keyword">this</span>;</span><br><span class="line">    result.setTableVersion();</span><br><span class="line">    <span class="keyword">if</span> (handlerController != <span class="keyword">null</span>) &#123;</span><br><span class="line">        handlerController.addToRealmObjects(result);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>同样是 SchemaMediator 类的默认实现 <code>DefaultRealmModuleMediator.java</code>，我们看 <code>newInstance()</code> 方法:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> &lt;E extends RealmObject&gt; <span class="function">E <span class="title">newInstance</span><span class="params">(Class&lt;E&gt; clazz, ColumnInfo columnInfo)</span> </span>&#123;</span><br><span class="line">    checkClass(clazz);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (clazz.equals(Person.class)) &#123;</span><br><span class="line">        <span class="keyword">return</span> clazz.cast(<span class="keyword">new</span> PersonRealmProxy(columnInfo));</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> getMissingProxyClassException(clazz);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以，Realm 以 Person.class 为参数创建实例的时候，返回的时候都是对应的 Proxy 类的实例。</p>
+<p>所以，Realm 在整个操作 Model 的过程中，都使用了 Model 的 Proxy 类，这样子最大程度的减少了对 Model 代码的入侵，只需要继承 RealmObject，即可完成所有的操作，一切都在编译时产生，也不会影响运行时的效率。</p>
+
+        </div>
+
+        
+
+        
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </article>
+    
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>このブログの内容物は<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja">クリエイティブ・コモンズ 表示 - 非営利 - 継承 4.0 国際ライセンスの下に提供されています</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>zhuangguangtuan &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/drafts/realm2.html&title=《Realm初步实践２》 — grant&pic=https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/drafts/realm2.html&title=《Realm初步实践２》 — grant&source=继续上一篇的内容，这篇文章主要讲 Realm 的工作方式。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/drafts/realm2.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Realm初步实践２》 — grant&url=http://yoursite.com/drafts/realm2.html&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/drafts/realm2.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/drafts/realm2.html" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'grant's blog';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'grant's blog';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

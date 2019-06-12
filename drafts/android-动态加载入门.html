@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>android-动态加载入门 | grant | not today</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="android,dynamic_load">
+    <meta name="description" content="Android 动态加载的技术出现已久，作为一个 Android Developer，现在才开始研究这门技术，有点惭愧。 初步使用，本文只讨论 仅限于动态加载 .class 文件的情况，后续会继续探究动态加载布局等资源文件等。">
+<meta name="keywords" content="android,dynamic_load">
+<meta property="og:type" content="website">
+<meta property="og:title" content="android-动态加载入门">
+<meta property="og:url" content="http://yoursite.com/drafts/android-动态加载入门.html">
+<meta property="og:site_name" content="grant">
+<meta property="og:description" content="Android 动态加载的技术出现已久，作为一个 Android Developer，现在才开始研究这门技术，有点惭愧。 初步使用，本文只讨论 仅限于动态加载 .class 文件的情况，后续会继续探究动态加载布局等资源文件等。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-14T03:28:06.159Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="android-动态加载入门">
+<meta name="twitter:description" content="Android 动态加载的技术出现已久，作为一个 Android Developer，现在才开始研究这门技术，有点惭愧。 初步使用，本文只讨论 仅限于动态加载 .class 文件的情况，后续会继续探究动态加载布局等资源文件等。">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhuangguangtuan</h5>
+          <a href="mailto:zhuangguangtuan@gmail.com" title="zhuangguangtuan@gmail.com" class="mail">zhuangguangtuan@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/guangtuan" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about">
+                <i class="icon icon-lg icon-file"></i>
+                About
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">android-动态加载入门</div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header page-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">android-动态加载入门</h1>
+        <h5 class="subtitle">
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    <article class="page-article fade" itemprop="blogPage">
+        <div class="post-content page-content" id="page-content" itemprop="pageContent">
+            <p>Android 动态加载的技术出现已久，作为一个 Android Developer，现在才开始研究这门技术，有点惭愧。</p>
+<p>初步使用，本文只讨论 仅限于动态加载 .class 文件的情况，后续会继续探究动态加载布局等资源文件等。</p>
+<a id="more"></a>
+<h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><h3 id="编译插件"><a href="#编译插件" class="headerlink" title="编译插件"></a>编译插件</h3><p>推荐的思路是，在 Android Studio 中另外开一个 Module，在其中编写需要的插件，之后在<br><code>/pathToProject/pathToLibrary/build/intermediates/classes/debug/com/package/name</code><br>中可以看到编译过后的 .class 文件。</p>
+<p>将 <code>com/package/name</code> 整个目录复制出来，剔除不必要的 .class 文件，直接打包成 .jar 文件。</p>
+<p>再使用 dx 工具打包成 .dex 文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">➜  23.0.2  <span class="built_in">pwd</span></span><br><span class="line">/path/to/sdk/build-tools/23.0.2</span><br><span class="line">➜  23.0.2  ./dx --dex --output=demo.dex /path/to/com.jar</span><br><span class="line">Picked up _JAVA_OPTIONS:   -Dawt.useSystemAAFontSettings=gasp</span><br></pre></td></tr></table></figure>
+<h3 id="下载插件"><a href="#下载插件" class="headerlink" title="下载插件"></a>下载插件</h3><p>在进行测试的时候，推荐 python 的一个超级方便的功能</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  Desktop  python -m SimpleHTTPServer</span><br><span class="line">Serving HTTP on 0.0.0.0 port 8000 ...</span><br></pre></td></tr></table></figure>
+<p>这样子，.dex 的文件的下载地址就是(同一个局域网，PC 的 IP 地址为 <code>192.168.1.103</code>)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String strUrl = <span class="string">"http://192.168.1.103:8000/demo.dex"</span>;</span><br></pre></td></tr></table></figure>
+<p>首先我们定义 .dex 要下载到的路径。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dexFilePath = Environment.getExternalStorageDirectory().getAbsolutePath()</span><br><span class="line">		+ File.separator + <span class="string">"demo.dex"</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="文件读写，加载对应的-dex-jar-apk-文件"><a href="#文件读写，加载对应的-dex-jar-apk-文件" class="headerlink" title="文件读写，加载对应的 dex jar apk 文件"></a>文件读写，加载对应的 dex jar apk 文件</h3><p>这里写一个简单的栗子，下载 .dex 文件后转存到 data 目录（我们熟知的缓存文件，数据库文件等也在此目录）。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        downloadDexFile();</span><br><span class="line"></span><br><span class="line">        Handler handler = <span class="keyword">new</span> Handler(Looper.getMainLooper());</span><br><span class="line">        handler.post(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                afterDownload();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).start();</span><br></pre></td></tr></table></figure>
+<p>下载完成以后</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">afterDownload</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    File dexFielPath = <span class="keyword">new</span> File(dexFilePath);</span><br><span class="line">    File dexOutputDir = <span class="keyword">this</span>.getDir(<span class="string">"dex"</span>, Context.MODE_PRIVATE);</span><br><span class="line"></span><br><span class="line">    DexClassLoader dexClassLoader = <span class="keyword">new</span> DexClassLoader(</span><br><span class="line">    	dexFielPath.getAbsolutePath(), dexOutputDir.getAbsolutePath(),</span><br><span class="line">        <span class="keyword">null</span>, getClassLoader()</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    callClassMethod(dexClassLoader);</span><br><span class="line"></span><br><span class="line">    callInterfaceMethod(dexClassLoader);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们使用 <code>DexClassLoader</code> 来加载 dex 里的 class 文件。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">File dexOutputDir = <span class="keyword">this</span>.getDir(<span class="string">"dex"</span>, Context.MODE_PRIVATE);</span><br><span class="line">DexClassLoader dexClassLoader = <span class="keyword">new</span> DexClassLoader(</span><br><span class="line">	dexFielPath.getAbsolutePath(), dexOutputDir.getAbsolutePath(),</span><br><span class="line">	<span class="keyword">null</span>, getClassLoader()</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>第一个参数为我们刚刚下载存储的路径。</p>
+</li>
+<li><p>第二个参数为内部存储存放 .dex 文件的路径， <code>/data/data/packageName/app_dex</code></p>
+</li>
+<li><p>第三个参数为 库 的路径，这里为 null</p>
+</li>
+<li><p>第四个参数为 ClassLoader</p>
+</li>
+</ul>
+<p>这样，我们就拿到了加载了 .dex 文件的 <code>classLoader</code></p>
+<h3 id="利用反射加载需要的类，执行需要的方法"><a href="#利用反射加载需要的类，执行需要的方法" class="headerlink" title="利用反射加载需要的类，执行需要的方法"></a>利用反射加载需要的类，执行需要的方法</h3><h4 id="直接调用"><a href="#直接调用" class="headerlink" title="直接调用"></a>直接调用</h4><p>插件的代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.granton.mylibrary;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"test"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过反射来调用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">callClassMethod</span><span class="params">(DexClassLoader dexClassLoader)</span> </span>&#123;</span><br><span class="line">    Class demoClass = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        demoClass = dexClassLoader.loadClass(<span class="string">"com.granton.mylibrary.Demo"</span>);</span><br><span class="line">        Method testMethod = demoClass.getDeclaredMethod(<span class="string">"test"</span>);</span><br><span class="line">        testMethod.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        <span class="comment">// 这里需要根据构造函数的具体情况来使用 newInstance() 方法</span></span><br><span class="line">        String string = (String) testMethod.invoke(demoClass.newInstance());</span><br><span class="line">        Toast.makeText(MainActivity.<span class="keyword">this</span>, string, Toast.LENGTH_SHORT).show();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种方法需要注意的地方是，因为主项目中不存在这个类和方法，所以只能通过方法名得到方法，并且通过 <code>method.invoke(receiver, args)</code> 来调用。</p>
+<h4 id="把需要调用的方法抽象成接口方法"><a href="#把需要调用的方法抽象成接口方法" class="headerlink" title="把需要调用的方法抽象成接口方法"></a>把需要调用的方法抽象成接口方法</h4><p>插件的接口（存放在主项目中，不能打包进 .dex 文件）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.granton.mylibrary;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">demoTest</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>插件的接口实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.granton.mylibrary;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IDemoImpl</span> <span class="keyword">implements</span> <span class="title">IDemo</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">demoTest</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"demoTest"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>插件的调用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">callInterfaceMethod</span><span class="params">(DexClassLoader dexClassLoader)</span> </span>&#123;</span><br><span class="line">    Class impl = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        impl = dexClassLoader.loadClass(<span class="string">"com.granton.mylibrary.IDemoImpl"</span>);</span><br><span class="line">        <span class="comment">// 这里需要根据构造函数的具体情况来使用 newInstance() 方法</span></span><br><span class="line">        IDemo idemo = (IDemo) impl.newInstance();</span><br><span class="line">        String string = idemo.demoTest();</span><br><span class="line">        Toast.makeText(MainActivity.<span class="keyword">this</span>, string, Toast.LENGTH_SHORT).show();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样子，调用接口方法的时候，可以根据 IDE 的提示进行编写，也符合面向接口编程的原则，对于项目的抽象和组织也会起到很大作用。</p>
+
+        </div>
+
+        
+
+        
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </article>
+    
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>このブログの内容物は<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja">クリエイティブ・コモンズ 表示 - 非営利 - 継承 4.0 国際ライセンスの下に提供されています</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>zhuangguangtuan &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/drafts/android-动态加载入门.html&title=《android-动态加载入门》 — grant&pic=https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/drafts/android-动态加载入门.html&title=《android-动态加载入门》 — grant&source=Android 动态加载的技术出现已久，作为一个 Android Developer，现在才开始研究这门技术，有点惭愧。
+初步使用，本文只讨论 仅限于动态..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/drafts/android-动态加载入门.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《android-动态加载入门》 — grant&url=http://yoursite.com/drafts/android-动态加载入门.html&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/drafts/android-动态加载入门.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/drafts/android-动态加载入门.html" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'grant's blog';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'grant's blog';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
