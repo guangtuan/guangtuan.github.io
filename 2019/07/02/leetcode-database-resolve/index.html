@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>在 leetcode 上刷数据库题目的总结 | grant | not today</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="mysql">
+    <meta name="description" content="最近在 leetcode 上刷了一下 database 的题目，做一下总结笔记。">
+<meta name="keywords" content="mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 leetcode 上刷数据库题目的总结">
+<meta property="og:url" content="http://yoursite.com/2019/07/02/leetcode-database-resolve/index.html">
+<meta property="og:site_name" content="grant">
+<meta property="og:description" content="最近在 leetcode 上刷了一下 database 的题目，做一下总结笔记。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-02T08:46:21.865Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在 leetcode 上刷数据库题目的总结">
+<meta name="twitter:description" content="最近在 leetcode 上刷了一下 database 的题目，做一下总结笔记。">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhuangguangtuan</h5>
+          <a href="mailto:zhuangguangtuan@gmail.com" title="zhuangguangtuan@gmail.com" class="mail">zhuangguangtuan@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/guangtuan" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about">
+                <i class="icon icon-lg icon-file"></i>
+                About
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">在 leetcode 上刷数据库题目的总结</div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">在 leetcode 上刷数据库题目的总结</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-07-02T07:38:27.000Z" itemprop="datePublished" class="page-time">
+  2019-07-02
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+
+<article id="post-leetcode-database-resolve" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">在 leetcode 上刷数据库题目的总结</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-07-02 15:38:27" datetime="2019-07-02T07:38:27.000Z" itemprop="datePublished">2019-07-02</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>最近在 leetcode 上刷了一下 database 的题目，做一下总结笔记。</p>
+<a id="more"></a>
+<p>因为贫穷，还写了一个<a href="https://gist.github.com/guangtuan/f325bf3e9f889a96fa6e1475c0073e5a" target="_blank" rel="noopener">油猴脚本</a>来隐藏掉订阅题目。</p>
+<h3 id="交换座位"><a href="#交换座位" class="headerlink" title="交换座位"></a>交换座位</h3><p><a href="https://leetcode.com/problems/exchange-seats/" target="_blank" rel="noopener">题目点这里</a>。</p>
+<blockquote>
+<p>题目的意思是交换相邻的两个记录的 student 字段，也就是 1 和 2 互换，3 和 4 互换这样子，如果最后一个是奇数，则不理会</p>
+</blockquote>
+<p>比如输入是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">id student</span><br><span class="line">1 alice</span><br><span class="line">2 bob</span><br><span class="line">3 tom</span><br></pre></td></tr></table></figure>
+<p>期望输出应该是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">id student</span><br><span class="line">1 bob</span><br><span class="line">2 alice</span><br><span class="line">3 tom</span><br></pre></td></tr></table></figure>
+<p>有两个解法，一个解法是通过控制流程来解决，还有一个比较骚的操作是通过位操作和 <code>COALESCE()</code> 函数来解决。</p>
+<p>SQL 代码如下<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line">    s1.id, <span class="keyword">COALESCE</span>(s2.student, s1.student) <span class="keyword">AS</span> student</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">    seat s1</span><br><span class="line">        <span class="keyword">LEFT</span> <span class="keyword">JOIN</span></span><br><span class="line">    seat s2 <span class="keyword">ON</span> ((s1.id + <span class="number">1</span>) ^ <span class="number">1</span>) - <span class="number">1</span> = s2.id</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> s1.id;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>这个解法的思路是将相邻的记录连接起来，连接后的每一行有相邻的两个 id 两个相应的 student 字段，然后拿对应的字段。</li>
+<li>使用左连接，左表的 student 一定会有数据，同时使用 <code>COALESCE()</code> 函数来选择 student 字段，优先取右表的 student，当右表的 student 为空，则取左表的 student，也就是用来兼容最后一行记录的 id 是奇数的情况。</li>
+<li>连表的条件：<code>f(n) = (n + 1) ^ 1 - 1</code><ul>
+<li>当输入为奇数，加一变为偶数，与 1 异或再加一，最后再减一，即为 <code>n + 1</code>。</li>
+<li>当输入为偶数，加一变为奇数，与 1 异或减一（变为输入），最后再减一，即为 <code>n - 1</code>。</li>
+<li>使用该公式可以达到 <strong><em>f(1) = 2, f(2) = 1</em></strong> 地效果。</li>
+</ul>
+</li>
+</ul>
+<p>因此，只需要将 <code>1&amp;2</code>， <code>3&amp;4</code> 这样关系的行记录进行左连接，再将左表的 id 和右表的 student 选择出来，即可达到题目要求。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2019-07-02T08:46:21.865Z" itemprop="dateUpdated">2019-07-02 16:46:21</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" alt="zhuangguangtuan">
+            zhuangguangtuan
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/07/02/leetcode-database-resolve/&title=《在 leetcode 上刷数据库题目的总结》 — grant&pic=https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/07/02/leetcode-database-resolve/&title=《在 leetcode 上刷数据库题目的总结》 — grant&source=最近在 leetcode 上刷了一下 database 的题目，做一下总结笔记。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/07/02/leetcode-database-resolve/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《在 leetcode 上刷数据库题目的总结》 — grant&url=http://yoursite.com/2019/07/02/leetcode-database-resolve/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/07/02/leetcode-database-resolve/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/05/01/about-product-thinking/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">我眼里的产品思维</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>zhuangguangtuan &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/07/02/leetcode-database-resolve/&title=《在 leetcode 上刷数据库题目的总结》 — grant&pic=https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/07/02/leetcode-database-resolve/&title=《在 leetcode 上刷数据库题目的总结》 — grant&source=最近在 leetcode 上刷了一下 database 的题目，做一下总结笔记。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/07/02/leetcode-database-resolve/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《在 leetcode 上刷数据库题目的总结》 — grant&url=http://yoursite.com/2019/07/02/leetcode-database-resolve/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/07/02/leetcode-database-resolve/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2019/07/02/leetcode-database-resolve/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'grant's blog';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'grant's blog';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
