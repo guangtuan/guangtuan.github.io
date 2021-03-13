@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="zhuangguangtuan&#39;s blog">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        谈谈程序开发里的依赖 - undefined
+        
+    </title>
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/aircloud.css">
+
+    
+<link rel="stylesheet" href="/css/gitment.css">
+
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> not today </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar ">
+            <img src="/img/avatar.png" />
+        </div>
+        <div class="name">
+            <i>zhuangguangtuan</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>HOME</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>TAGS</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>ARCHIVES</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>ABOUT</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E7%9A%84%E5%85%B8%E5%9E%8B%E4%BB%A3%E8%A1%A8%E8%AF%B4%E8%B5%B7"><span class="toc-text">从依赖注入的典型代表说起</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="toc-text">为什么我们需要依赖注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%91%E4%BB%AC%E8%AF%A5%E6%80%8E%E4%B9%88%E8%BF%9B%E8%A1%8C%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="toc-text">我们该怎么进行依赖注入</span></a></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">search</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> not today </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        谈谈程序开发里的依赖
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">Post：<span>2021-03-13 21:24:00</span></span>
+        
+        <span class="attr">Tags：/
+        
+        <a class="tag" href="/tags/#coding" title="coding">coding</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">Visit：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <p>一个 curdboy 的碎碎念</p>
+<a id="more"></a>
+
+<h3 id="从依赖注入的典型代表说起"><a href="#从依赖注入的典型代表说起" class="headerlink" title="从依赖注入的典型代表说起"></a>从依赖注入的典型代表说起</h3><p>正儿八经使用 springboot 写代码也有几年时间了, 逐步从只会给变量 <code>@autowired</code> 到现在知道构造函数注入, set 方法注入, 从只知道 <code>@Service</code> 到手动注册 bean 等, 对于工具的使用逐渐熟练, 当然我一直觉得工具并不重要, 重要的是这一套思想</p>
+<h3 id="为什么我们需要依赖注入"><a href="#为什么我们需要依赖注入" class="headerlink" title="为什么我们需要依赖注入"></a>为什么我们需要依赖注入</h3><p>老生长谈, 一个很重要的原因就是方便, 我们来演进式地看待这个问题</p>
+<p>1.如果在没有依赖注入的框架里, 我们要使用一个依赖, 最方便的, 显然是直接 new 一个</p>
+<p>2.但因为构造一个对象有一定的开销, 所以我们会想到常用的单例模式, 也就是在一个进程里, 该类的对象只有一个, 由此还衍生出了各种单例模式的写法, 各种用到该依赖的地方, 使用一个 <code>getInstance()</code></p>
+<p>3.因此, 在依赖注入的框架里, 会自动帮忙干这个事情, 我们再也不用写各种单例模式, 此外, 还有一个重要的点, 相比需要的时候直接 getInstance, springboot 是将依赖强制注入到变量上, 好处是他可以整理依赖关系, 在复杂的系统里, 依赖是一个无向图, 如果不进行依赖的整理, 很容易就跑出来一个死循环, 也因此, 我们在使用构造函数注入的时候, 不能既 <code>A(B b)</code> 又 <code>B(A a)</code></p>
+<p>4.但是, 这个思路从一开始就是有问题的, 我们假设的是, new 一个对象会产生开销, 所以才需要依赖注入管理, 但假如 new 一个对象没有开销呢? 或者, 我们不需要 new 就能使用所需要的依赖呢?</p>
+<p>两个点<br>4.1 new 一个对象没有开销, 这个只能未来的 java 给答案了<br>4.2 不需要 new 可以使用需要的依赖, 使用静态方法, 但静态方法又有个问题, 那就是如果要知道我这个服务和其他模块的依赖关系, 只能去看 import 语句了, 相比构造函数上看还是没那么方便的, 如果把这个锅归到 java 语法上, 那也没毛病</p>
+<h3 id="我们该怎么进行依赖注入"><a href="#我们该怎么进行依赖注入" class="headerlink" title="我们该怎么进行依赖注入"></a>我们该怎么进行依赖注入</h3><p>说到这个, 我会想到面向接口编程, 这也是个老生常谈, 使用接口, 一般来说是为了复用, 但是好像写了这么久的业务, 也没看到可以复用的地方?</p>
+<p>其实没得复用是开发当下时候的直观感受, 站在时间的角度上, 其实接口是应对加需求的的利器, 一般来说业务主流程注入接口, 结合工厂模式, 就可以实现加需求不改动原有代码, 当然没有变更预期的功能, 或者说赶工期（误）, 不使用接口也没问题</p>
+<p>除了复用, 使用接口在开发中的一个典型好处是便于进行单元测试, 我们在做某个具体的类的单元测试的时候, 会想办法 mock 掉其他依赖, 如果依赖是一个 class, 那么需要借助 mock 工具, 但如果依赖是一个接口, 则可以直接传入一个 mock 实现</p>
+<p>在重构里, 接口能发挥的作用也很大, 比方说我们有一个屎山代码, 有很多功能, 有个几千行, 我们可以有一个重构的思路</p>
+<ol>
+<li>按照调用的地方的业务职责, 从读写的角度也好, 从面向的用户群体也好, 定义一些接口</li>
+<li>再让这个几千行的类实现这几个新定义出来的接口</li>
+<li>对屎山代码进行必要的切分</li>
+</ol>
+<p>这样子干的心智负担是不是没那么重?</p>
+<p>由此看来, 接口可能是语言的设计者设计来, 方便开发者进行开发的东西.</p>
+
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+        
+        
+
+        
+
+        
+
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>  Theme <a target="_blank" rel="noopener" href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = ""
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="/js/index.js"></script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+</html>

@@ -1,181 +1,165 @@
 <!DOCTYPE html>
-<html>
-<head><meta name="generator" content="Hexo 3.8.0">
-    
-
-    
-
-    
-
-
-
+<html lang="en">
+<head>
     <meta charset="utf-8">
-    
-    
-    
-    
-    <title>vue 单元测试中对 watch 的思考 | grant | not today</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    
-    <meta name="theme-color" content="#3F51B5">
-    
-    
-    <meta name="keywords" content="vue,fe,unit_test">
-    <meta name="description" content="Vue 单元测试中，对 watch 的思考。">
-<meta name="keywords" content="vue,fe,unit_test">
-<meta property="og:type" content="article">
-<meta property="og:title" content="vue 单元测试中对 watch 的思考">
-<meta property="og:url" content="http://yoursite.com/2017/10/07/vue单元测试的思考/index.html">
-<meta property="og:site_name" content="grant">
-<meta property="og:description" content="Vue 单元测试中，对 watch 的思考。">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-14T03:19:39.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="vue 单元测试中对 watch 的思考">
-<meta name="twitter:description" content="Vue 单元测试中，对 watch 的思考。">
-    
-    <link rel="shortcut icon" href="/favicon.ico">
-    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
-    <script>window.lazyScripts=[]</script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="zhuangguangtuan&#39;s blog">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <!-- custom head -->
-    
+    <title>
+        
+        vue 单元测试中对 watch 的思考 - undefined
+        
+    </title>
 
-</head>
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/aircloud.css">
+
+    
+<link rel="stylesheet" href="/css/gitment.css">
+
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
 
 <body>
-    <div id="loading" class="active"></div>
 
-    <aside id="menu" class="hide">
-  <div class="inner flex-row-vertical">
-    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
-        <i class="icon icon-lg icon-close"></i>
-    </a>
-    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
-      <div class="brand">
-        <a href="/" class="avatar waves-effect waves-circle waves-light">
-          <img src="https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4">
-        </a>
-        <hgroup class="introduce">
-          <h5 class="nickname">zhuangguangtuan</h5>
-          <a href="mailto:zhuangguangtuan@gmail.com" title="zhuangguangtuan@gmail.com" class="mail">zhuangguangtuan@gmail.com</a>
-        </hgroup>
-      </div>
-    </div>
-    <div class="scroll-wrap flex-col">
-      <ul class="nav">
-        
-            <li class="waves-block waves-effect">
-              <a href="/">
-                <i class="icon icon-lg icon-home"></i>
-                Home
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/archives">
-                <i class="icon icon-lg icon-archives"></i>
-                Archives
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/tags">
-                <i class="icon icon-lg icon-tags"></i>
-                Tags
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="https://github.com/guangtuan" target="_blank">
-                <i class="icon icon-lg icon-github"></i>
-                Github
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/about">
-                <i class="icon icon-lg icon-file"></i>
-                About
-              </a>
-            </li>
-        
-      </ul>
-    </div>
-  </div>
-</aside>
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
 
-    <main id="main">
-        <header class="top-header" id="header">
-    <div class="flex-row">
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
-          <i class="icon icon-lg icon-navicon"></i>
-        </a>
-        <div class="flex-col header-title ellipsis">vue 单元测试中对 watch 的思考</div>
-        
-        
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
-            <i class="icon icon-lg icon-share-alt"></i>
-        </a>
-        
-    </div>
-</header>
-<header class="content-header post-header">
+<div class="index-about">
+    <i> not today </i>
+</div>
 
-    <div class="container fade-scale">
-        <h1 class="title">vue 单元测试中对 watch 的思考</h1>
-        <h5 class="subtitle">
-            
-                <time datetime="2017-10-07T11:23:21.000Z" itemprop="datePublished" class="page-time">
-  2017-10-07
-</time>
-
-
-            
-        </h5>
-    </div>
-
+<div class="index-container">
     
-
-
-</header>
-
-
-<div class="container body-wrap">
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar ">
+            <img src="/img/avatar.png" />
+        </div>
+        <div class="name">
+            <i>zhuangguangtuan</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>HOME</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>TAGS</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>ARCHIVES</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>ABOUT</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
     
-
-<article id="post-vue单元测试的思考" class="post-article article-type-post fade" itemprop="blogPost">
-
-    <div class="post-card">
-        <h1 class="post-card-title">vue 单元测试中对 watch 的思考</h1>
-        <div class="post-meta">
-            <time class="post-time" title="2017-10-07 19:23:21" datetime="2017-10-07T11:23:21.000Z" itemprop="datePublished">2017-10-07</time>
-
-            
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E8%A8%80"><span class="toc-text">引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AA%E6%80%9D%E8%B7%AF"><span class="toc-text">第一个思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%A6%E5%A4%96%E4%B8%80%E7%A7%8D%E6%80%9D%E8%B7%AF"><span class="toc-text">另外一种思路</span></a></li></ol>
+</div>
+    
+</div>
 
 
-            
-<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
-    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
-</span>
-
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">search</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
 
         </div>
-        <div class="post-content" id="post-content" itemprop="postContent">
-            <p>Vue 单元测试中，对 watch 的思考。</p>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> not today </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        vue 单元测试中对 watch 的思考
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">Post：<span>2017-10-07 19:23:21</span></span>
+        
+        <span class="attr">Tags：/
+        
+        <a class="tag" href="/tags/#vue" title="vue">vue</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#fe" title="fe">fe</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#unit_test" title="unit_test">unit_test</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">Visit：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <p>Vue 单元测试中，对 watch 的思考。</p>
 <a id="more"></a>
-<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>以下 watch 部分摘自 <a href="https://cn.vuejs.org/v2/guide/computed.html#观察者" target="_blank" rel="noopener">vue 官方文档</a></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">watch: &#123;</span><br><span class="line">  <span class="comment">// 如果 question 发生改变，这个函数就会运行</span></span><br><span class="line">  question: <span class="function"><span class="keyword">function</span> (<span class="params">newQuestion</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.answer = <span class="string">'Waiting for you to stop typing...'</span></span><br><span class="line">    <span class="keyword">this</span>.getAnswer()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>以下 watch 部分摘自 <a target="_blank" rel="noopener" href="https://cn.vuejs.org/v2/guide/computed.html#%E8%A7%82%E5%AF%9F%E8%80%85">vue 官方文档</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">watch: &#123;</span><br><span class="line">  <span class="comment">// 如果 question 发生改变，这个函数就会运行</span></span><br><span class="line">  question: <span class="function"><span class="keyword">function</span> (<span class="params">newQuestion</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.answer = <span class="string">&#x27;Waiting for you to stop typing...&#x27;</span></span><br><span class="line">    <span class="built_in">this</span>.getAnswer()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h3 id="第一个思路"><a href="#第一个思路" class="headerlink" title="第一个思路"></a>第一个思路</h3><p>如果要对这个模块进行测试，通常第一个想到的流程是</p>
 <ul>
 <li>新建这个 Vue 实例</li>
 <li>更改 question 的值，以触发这个回调函数</li>
 </ul>
-<p>伪代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> vue = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  data: data,</span><br><span class="line">  watcher: &#123;</span><br><span class="line">    data () &#123;</span><br><span class="line">      <span class="comment">// callback</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">vue.data = <span class="string">'another value'</span></span><br><span class="line">assertFunctionCall()</span><br></pre></td></tr></table></figure></p>
+<p>伪代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> vue = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  data: data,</span><br><span class="line">  watcher: &#123;</span><br><span class="line">    data () &#123;</span><br><span class="line">      <span class="comment">// callback</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">vue.data = <span class="string">&#x27;another value&#x27;</span></span><br><span class="line">assertFunctionCall()</span><br></pre></td></tr></table></figure>
+
 <p>在实际编写测试用例的过程中遇到了问题，对数据的更改操作，是在下一轮事件循环中才会被 watch 发现，换言之，如果在同一个事件循环中，数据发生了多次变化，被检测到的只有<strong>这一轮事件循环里面的最后一次变化</strong>。</p>
 <p>而当测试框架没有做特别的处理，断言是不会像所预期的那样子工作，因为在 <code>assertFunctionCall</code> 的时候，<code>watcherFunction</code> 还没有被调用。</p>
-<p>vue 官方提供了 <a href="https://cn.vuejs.org/v2/api/#Vue-nextTick" target="_blank" rel="noopener">$nextTick 函数</a>，这个函数作用类似于 setTimeout，在下一轮事件循环的末尾加入一个任务，以下写法，断言是在 watch 函数调用之后执行的。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> vue = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  data: data,</span><br><span class="line">  watcher: &#123;</span><br><span class="line">    data () &#123;</span><br><span class="line">      <span class="comment">// callback</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">vue.data = <span class="string">'another value'</span></span><br><span class="line">vue.$nextTick(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  assertFunctionCall()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>vue 官方提供了 <a target="_blank" rel="noopener" href="https://cn.vuejs.org/v2/api/#Vue-nextTick">$nextTick 函数</a>，这个函数作用类似于 setTimeout，在下一轮事件循环的末尾加入一个任务，以下写法，断言是在 watch 函数调用之后执行的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> vue = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  data: data,</span><br><span class="line">  watcher: &#123;</span><br><span class="line">    data () &#123;</span><br><span class="line">      <span class="comment">// callback</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">vue.data = <span class="string">&#x27;another value&#x27;</span></span><br><span class="line">vue.$nextTick(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  assertFunctionCall()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>这种写法的用例，如果没有使用 async/await 关键字，需要使用 Promise 或者 done 函数来让测试用例以异步函数的形式来运行（即下一个用例等待这个用例的断言结果）</p>
 </blockquote>
@@ -184,252 +168,69 @@
 <li>watcher 可以用过 expression 字段找到，如对 question 字段进行监听，则 expression 字段值为 ‘question’</li>
 <li>watcher 有一个 <code>run</code> 方法，以下是去掉了注释的源码，在编写测试用例的时候，可以在改变数据以后，直接调用 watcher.run，然后断言回调函数有没有被正确调用。</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Watcher.prototype.run = <span class="function"><span class="keyword">function</span> <span class="title">run</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">this</span>.active) &#123;</span><br><span class="line">    <span class="keyword">var</span> value = <span class="keyword">this</span>.get();</span><br><span class="line">    <span class="keyword">if</span> ( value !== <span class="keyword">this</span>.value || isObject(value) || <span class="keyword">this</span>.deep) &#123;</span><br><span class="line">      <span class="keyword">var</span> oldValue = <span class="keyword">this</span>.value;</span><br><span class="line">      <span class="keyword">this</span>.value = value;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.user) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">          <span class="keyword">this</span>.cb.call(<span class="keyword">this</span>.vm, value, oldValue);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">          handleError(e, <span class="keyword">this</span>.vm, (<span class="string">"callback for watcher \""</span> + (<span class="keyword">this</span>.expression) + <span class="string">"\""</span>));</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.cb.call(<span class="keyword">this</span>.vm, value, oldValue);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Watcher.prototype.run = <span class="function"><span class="keyword">function</span> <span class="title">run</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">this</span>.active) &#123;</span><br><span class="line">    <span class="keyword">var</span> value = <span class="built_in">this</span>.get();</span><br><span class="line">    <span class="keyword">if</span> ( value !== <span class="built_in">this</span>.value || isObject(value) || <span class="built_in">this</span>.deep) &#123;</span><br><span class="line">      <span class="keyword">var</span> oldValue = <span class="built_in">this</span>.value;</span><br><span class="line">      <span class="built_in">this</span>.value = value;</span><br><span class="line">      <span class="keyword">if</span> (<span class="built_in">this</span>.user) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">          <span class="built_in">this</span>.cb.call(<span class="built_in">this</span>.vm, value, oldValue);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">          handleError(e, <span class="built_in">this</span>.vm, (<span class="string">&quot;callback for watcher \&quot;&quot;</span> + (<span class="built_in">this</span>.expression) + <span class="string">&quot;\&quot;&quot;</span>));</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.cb.call(<span class="built_in">this</span>.vm, value, oldValue);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
 <p>测试用例类似这样，如此便屏蔽了事件循环，done 函数等概念。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> vue = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  data: data,</span><br><span class="line">  watcher: &#123;</span><br><span class="line">    data () &#123;</span><br><span class="line">      <span class="comment">// callback</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">vue.data = <span class="string">'another value'</span></span><br><span class="line"><span class="keyword">let</span> watcher = getWatcherByExpression(vue, <span class="string">'data'</span>)</span><br><span class="line">watcher.run()</span><br><span class="line">assertFunctionCall()</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> vue = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  data: data,</span><br><span class="line">  watcher: &#123;</span><br><span class="line">    data () &#123;</span><br><span class="line">      <span class="comment">// callback</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">vue.data = <span class="string">&#x27;another value&#x27;</span></span><br><span class="line"><span class="keyword">let</span> watcher = getWatcherByExpression(vue, <span class="string">&#x27;data&#x27;</span>)</span><br><span class="line">watcher.run()</span><br><span class="line">assertFunctionCall()</span><br></pre></td></tr></table></figure>
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
         </div>
 
-        <blockquote class="post-copyright">
-    
-    <div class="content">
-        
-<span class="post-time">
-    Last updated: <time datetime="2018-12-14T03:19:39.000Z" itemprop="dateUpdated">2018-12-14 11:19:39</time>
-</span><br>
-
-
-        
     </div>
-    
-    <footer>
-        <a href="http://yoursite.com">
-            <img src="https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" alt="zhuangguangtuan">
-            zhuangguangtuan
-        </a>
-    </footer>
-</blockquote>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+        
+        
 
         
 
+        
 
-        <div class="post-footer">
-            
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fe/">fe</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/unit-test/">unit_test</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue/">vue</a></li></ul>
+        
 
+        
 
-            
-<div class="page-share-wrap">
-    
-
-<div class="page-share" id="pageShare">
-    <ul class="reset share-icons">
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/10/07/vue单元测试的思考/&title=《vue 单元测试中对 watch 的思考》 — grant&pic=https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/10/07/vue单元测试的思考/&title=《vue 单元测试中对 watch 的思考》 — grant&source=Vue 单元测试中，对 watch 的思考。" data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/10/07/vue单元测试的思考/" data-title=" Facebook">
-          <i class="icon icon-facebook"></i>
-        </a>
-      </li>
-      <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《vue 单元测试中对 watch 的思考》 — grant&url=http://yoursite.com/2017/10/07/vue单元测试的思考/&via=http://yoursite.com" data-title=" Twitter">
-          <i class="icon icon-twitter"></i>
-        </a>
-      </li>
-      <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/10/07/vue单元测试的思考/" data-title=" Google+">
-          <i class="icon icon-google-plus"></i>
-        </a>
-      </li>
     </ul>
- </div>
-
-
-
-    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
-        <i class="icon icon-share-alt icon-lg"></i>
-    </a>
-</div>
-
-
-
-        </div>
-    </div>
-
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/2017/10/28/web发布笔记/" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">web发布笔记</h4>
-      </a>
-    </div>
-  
-
-  
-    <div class="waves-block waves-effect next">
-      <a href="/2016/11/28/java_collection_summary/" id="post-next" class="post-nav-link">
-        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">java 集合类整理</h4>
-      </a>
-    </div>
-  
-</nav>
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</article>
-
-
-
-</div>
-
-        <footer class="footer">
-    <div class="top">
-        
-<p>
-    <span id="busuanzi_container_site_uv" style="display:none">
-        站点总访客数：<span id="busuanzi_value_site_uv"></span>
-    </span>
-    <span id="busuanzi_container_site_pv" style="display:none">
-        站点总访问量：<span id="busuanzi_value_site_pv"></span>
-    </span>
-</p>
-
-
-        <p>
-            
-            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
-        </p>
-    </div>
-    <div class="bottom">
-        <p><span>zhuangguangtuan &copy; 2015 - 2020</span>
-            <span>
-                
-                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
-            </span>
-        </p>
-    </div>
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>  Theme <a target="_blank" rel="noopener" href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
 </footer>
 
-    </main>
-    <div class="mask" id="mask"></div>
-<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
-
-
-
-<div class="global-share" id="globalShare">
-    <ul class="reset share-icons">
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/10/07/vue单元测试的思考/&title=《vue 单元测试中对 watch 的思考》 — grant&pic=https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/10/07/vue单元测试的思考/&title=《vue 单元测试中对 watch 的思考》 — grant&source=Vue 单元测试中，对 watch 的思考。" data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/10/07/vue单元测试的思考/" data-title=" Facebook">
-          <i class="icon icon-facebook"></i>
-        </a>
-      </li>
-      <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《vue 单元测试中对 watch 的思考》 — grant&url=http://yoursite.com/2017/10/07/vue单元测试的思考/&via=http://yoursite.com" data-title=" Twitter">
-          <i class="icon icon-twitter"></i>
-        </a>
-      </li>
-      <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/10/07/vue单元测试的思考/" data-title=" Google+">
-          <i class="icon icon-google-plus"></i>
-        </a>
-      </li>
-    </ul>
- </div>
-
-
-<div class="page-modal wx-share" id="wxShare">
-    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2017/10/07/vue单元测试的思考/" alt="微信分享二维码">
-</div>
-
-
-
-
-    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
-<script>
-var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
-
-
-</script>
-
-<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
-
-
-
-
-
-
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-
-<script>
-(function() {
-    var OriginTitile = document.title, titleTime;
-    document.addEventListener('visibilitychange', function() {
-        if (document.hidden) {
-            document.title = 'grant's blog';
-            clearTimeout(titleTime);
-        } else {
-            document.title = 'grant's blog';
-            titleTime = setTimeout(function() {
-                document.title = OriginTitile;
-            },2000);
-        }
-    });
-})();
-</script>
 
 
 
 </body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = ""
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="/js/index.js"></script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
 </html>

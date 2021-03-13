@@ -1,177 +1,146 @@
 <!DOCTYPE html>
-<html>
-<head><meta name="generator" content="Hexo 3.8.0">
-    
-
-    
-
-    
-
-
-
+<html lang="en">
+<head>
     <meta charset="utf-8">
-    
-    
-    
-    
-    <title>动态代理与Retrofit | grant | not today</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    
-    <meta name="theme-color" content="#3F51B5">
-    
-    
-    <meta name="keywords" content="android">
-    <meta name="description" content="动态代理是什么 PS：对于动态代理了解的同志可以跳过这一个 part  大家都知道，retrofit 内部应用了动态代理技术，那么动态代理又是什么？以下来自 Oracle 的官方文档 以及我自己的渣翻译">
-<meta name="keywords" content="android">
-<meta property="og:type" content="article">
-<meta property="og:title" content="动态代理与Retrofit">
-<meta property="og:url" content="http://yoursite.com/2016/04/19/动态代理与retrofit/index.html">
-<meta property="og:site_name" content="grant">
-<meta property="og:description" content="动态代理是什么 PS：对于动态代理了解的同志可以跳过这一个 part  大家都知道，retrofit 内部应用了动态代理技术，那么动态代理又是什么？以下来自 Oracle 的官方文档 以及我自己的渣翻译">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://blog.qiji.tech/wp-content/uploads/2016/04/动态代理图解1-定义一个接口.png">
-<meta property="og:image" content="http://blog.qiji.tech/wp-content/uploads/2016/04/动态代理图解2-实现接口-InvocationHandler.png">
-<meta property="og:image" content="http://blog.qiji.tech/wp-content/uploads/2016/04/动态代理图解-3-Proxy.newProxyInstance-创建代理类.png">
-<meta property="og:image" content="http://blog.qiji.tech/wp-content/uploads/2016/04/动态代理图解4-代理类的接口方法的具体调用过程.png">
-<meta property="og:updated_time" content="2018-12-14T03:07:29.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="动态代理与Retrofit">
-<meta name="twitter:description" content="动态代理是什么 PS：对于动态代理了解的同志可以跳过这一个 part  大家都知道，retrofit 内部应用了动态代理技术，那么动态代理又是什么？以下来自 Oracle 的官方文档 以及我自己的渣翻译">
-<meta name="twitter:image" content="http://blog.qiji.tech/wp-content/uploads/2016/04/动态代理图解1-定义一个接口.png">
-    
-    <link rel="shortcut icon" href="/favicon.ico">
-    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
-    <script>window.lazyScripts=[]</script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="zhuangguangtuan&#39;s blog">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <!-- custom head -->
-    
+    <title>
+        
+        动态代理与Retrofit - undefined
+        
+    </title>
 
-</head>
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/aircloud.css">
+
+    
+<link rel="stylesheet" href="/css/gitment.css">
+
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
 
 <body>
-    <div id="loading" class="active"></div>
 
-    <aside id="menu" class="hide">
-  <div class="inner flex-row-vertical">
-    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
-        <i class="icon icon-lg icon-close"></i>
-    </a>
-    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
-      <div class="brand">
-        <a href="/" class="avatar waves-effect waves-circle waves-light">
-          <img src="https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4">
-        </a>
-        <hgroup class="introduce">
-          <h5 class="nickname">zhuangguangtuan</h5>
-          <a href="mailto:zhuangguangtuan@gmail.com" title="zhuangguangtuan@gmail.com" class="mail">zhuangguangtuan@gmail.com</a>
-        </hgroup>
-      </div>
-    </div>
-    <div class="scroll-wrap flex-col">
-      <ul class="nav">
-        
-            <li class="waves-block waves-effect">
-              <a href="/">
-                <i class="icon icon-lg icon-home"></i>
-                Home
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/archives">
-                <i class="icon icon-lg icon-archives"></i>
-                Archives
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/tags">
-                <i class="icon icon-lg icon-tags"></i>
-                Tags
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="https://github.com/guangtuan" target="_blank">
-                <i class="icon icon-lg icon-github"></i>
-                Github
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/about">
-                <i class="icon icon-lg icon-file"></i>
-                About
-              </a>
-            </li>
-        
-      </ul>
-    </div>
-  </div>
-</aside>
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
 
-    <main id="main">
-        <header class="top-header" id="header">
-    <div class="flex-row">
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
-          <i class="icon icon-lg icon-navicon"></i>
-        </a>
-        <div class="flex-col header-title ellipsis">动态代理与Retrofit</div>
-        
-        
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
-            <i class="icon icon-lg icon-share-alt"></i>
-        </a>
-        
-    </div>
-</header>
-<header class="content-header post-header">
+<div class="index-about">
+    <i> not today </i>
+</div>
 
-    <div class="container fade-scale">
-        <h1 class="title">动态代理与Retrofit</h1>
-        <h5 class="subtitle">
-            
-                <time datetime="2016-04-19T15:00:06.000Z" itemprop="datePublished" class="page-time">
-  2016-04-19
-</time>
-
-
-            
-        </h5>
-    </div>
-
+<div class="index-container">
     
-
-
-</header>
-
-
-<div class="container body-wrap">
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar ">
+            <img src="/img/avatar.png" />
+        </div>
+        <div class="name">
+            <i>zhuangguangtuan</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>HOME</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>TAGS</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>ARCHIVES</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>ABOUT</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
     
-
-<article id="post-动态代理与retrofit" class="post-article article-type-post fade" itemprop="blogPost">
-
-    <div class="post-card">
-        <h1 class="post-card-title">动态代理与Retrofit</h1>
-        <div class="post-meta">
-            <time class="post-time" title="2016-04-19 23:00:06" datetime="2016-04-19T15:00:06.000Z" itemprop="datePublished">2016-04-19</time>
-
-            
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">动态代理是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Retrofit-%E5%AF%B9%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-text">Retrofit 对动态代理的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Retrofit-java-%E9%83%A8%E5%88%86"><span class="toc-text">Retrofit.java 部分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MethodHandler-java-%E9%83%A8%E5%88%86"><span class="toc-text">MethodHandler.java 部分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E6%A0%97%E5%AD%90"><span class="toc-text">一个栗子</span></a></li></ol></li></ol>
+</div>
+    
+</div>
 
 
-            
-<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
-    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
-</span>
-
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">search</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
 
         </div>
-        <div class="post-content" id="post-content" itemprop="postContent">
-            <h2 id="动态代理是什么"><a href="#动态代理是什么" class="headerlink" title="动态代理是什么"></a>动态代理是什么</h2><blockquote>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> not today </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        动态代理与Retrofit
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">Post：<span>2016-04-19 23:00:06</span></span>
+        
+        <span class="attr">Tags：/
+        
+        <a class="tag" href="/tags/#android" title="android">android</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">Visit：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <h2 id="动态代理是什么"><a href="#动态代理是什么" class="headerlink" title="动态代理是什么"></a>动态代理是什么</h2><blockquote>
 <p>PS：对于动态代理了解的同志可以跳过这一个 part</p>
 </blockquote>
-<p>大家都知道，retrofit 内部应用了动态代理技术，那么动态代理又是什么？以下来自 <a href="http://docs.oracle.com/javase/8/docs/technotes/guides/reflection/proxy.html" target="_blank" rel="noopener">Oracle 的官方文档</a> 以及我自己的渣翻译</p>
+<p>大家都知道，retrofit 内部应用了动态代理技术，那么动态代理又是什么？以下来自 <a target="_blank" rel="noopener" href="http://docs.oracle.com/javase/8/docs/technotes/guides/reflection/proxy.html">Oracle 的官方文档</a> 以及我自己的渣翻译</p>
 <a id="more"></a>
+
 <blockquote>
 <p>A dynamic proxy class is a class that implements a list of interfaces specified at runtime such that a method invocation through one of the interfaces on an instance of the class will be encoded and dispatched to another object through a uniform interface.</p>
 </blockquote>
@@ -192,37 +161,13 @@
 </blockquote>
 <p>翻译得不咋地，各位兄台还是看原文把，或者来张图：</p>
 <p>首先我们需要定义一个接口：</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://blog.qiji.tech/wp-content/uploads/2016/04/动态代理图解1-定义一个接口.png" alt="定义一个接口" title="">
-                </div>
-                <div class="image-caption">定义一个接口</div>
-            </figure>
+<p><img src="http://blog.qiji.tech/wp-content/uploads/2016/04/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%9B%BE%E8%A7%A31-%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E6%8E%A5%E5%8F%A3.png" alt="定义一个接口"></p>
 <p>第二步是实现接口 <code>InvocationHandler</code> ，这个实现类决定了第一步提到的接口的方法在调用的时候的做法。</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://blog.qiji.tech/wp-content/uploads/2016/04/动态代理图解2-实现接口-InvocationHandler.png" alt="实现接口 InvocationHandler" title="">
-                </div>
-                <div class="image-caption">实现接口 InvocationHandler</div>
-            </figure>
+<p><img src="http://blog.qiji.tech/wp-content/uploads/2016/04/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%9B%BE%E8%A7%A32-%E5%AE%9E%E7%8E%B0%E6%8E%A5%E5%8F%A3-InvocationHandler.png" alt="实现接口 InvocationHandler"></p>
 <p>第三步是创建出代理类，使用 <code>Proxy.newProxyInstance(ClassLoader, interfaces[], InvocationHandlerImpl)</code> 方法创建一个代理类，这个类在创建过程中会实现传入的所有接口，并且会向生成的代理类注入传入的 <code>InvocationHandlerImpl</code> 。</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://blog.qiji.tech/wp-content/uploads/2016/04/动态代理图解-3-Proxy.newProxyInstance-创建代理类.png" alt="Proxy.newProxyInstance 创建代理类" title="">
-                </div>
-                <div class="image-caption">Proxy.newProxyInstance 创建代理类</div>
-            </figure>
+<p><img src="http://blog.qiji.tech/wp-content/uploads/2016/04/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%9B%BE%E8%A7%A3-3-Proxy.newProxyInstance-%E5%88%9B%E5%BB%BA%E4%BB%A3%E7%90%86%E7%B1%BB.png" alt="Proxy.newProxyInstance 创建代理类"></p>
 <p>最后看代理类的接口方法的具体调用过程</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://blog.qiji.tech/wp-content/uploads/2016/04/动态代理图解4-代理类的接口方法的具体调用过程.png" alt="代理类的接口方法的具体调用过程" title="">
-                </div>
-                <div class="image-caption">代理类的接口方法的具体调用过程</div>
-            </figure>
+<p><img src="http://blog.qiji.tech/wp-content/uploads/2016/04/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%9B%BE%E8%A7%A34-%E4%BB%A3%E7%90%86%E7%B1%BB%E7%9A%84%E6%8E%A5%E5%8F%A3%E6%96%B9%E6%B3%95%E7%9A%84%E5%85%B7%E4%BD%93%E8%B0%83%E7%94%A8%E8%BF%87%E7%A8%8B.png" alt="代理类的接口方法的具体调用过程"></p>
 <p>具体的过程在图中已经有所描述，传参数啥的仔细看文档即可，</p>
 <p><strong>比较重点的就是 <code>InvocationHandler</code> 中覆写的 <code>invoke()</code> 方法，在进行原本的方法调用之前或者之后，可以做点事情。</strong></p>
 <p>比如权限验证。假设存在 <code>RoleOne</code> 和 <code>RoleTwo</code> 两种角色，</p>
@@ -242,20 +187,26 @@
 <p>所以，赶紧跳进源码，查看 <code>create()</code> 方法都做了些啥，了解一下 Retrofit 是如何运用动态代理吧。</p>
 <p>源码部分， <code>Retrofit.java$create()</code></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> &lt;T&gt; <span class="function">T <span class="title">create</span><span class="params">(<span class="keyword">final</span> Class&lt;T&gt; service)</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 检查传入的 service 是不是一个接口</span></span><br><span class="line">    Utils.validateServiceInterface(service);</span><br><span class="line">    <span class="keyword">if</span> (validateEagerly) &#123;</span><br><span class="line">      eagerlyValidateMethods(service);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (T) Proxy.newProxyInstance(service.getClassLoader(), <span class="keyword">new</span> Class&lt;?&gt;[] &#123; service &#125;,<span class="keyword">new</span> InvocationHandler() &#123;</span><br><span class="line">    	<span class="keyword">private</span> <span class="keyword">final</span> Platform platform = Platform.get();</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object... args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">            <span class="comment">// If the method is a method from Object then defer to normal invocation.</span></span><br><span class="line">            <span class="keyword">if</span> (method.getDeclaringClass() == Object.class) &#123;</span><br><span class="line">                <span class="keyword">return</span> method.invoke(<span class="keyword">this</span>, args);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (platform.isDefaultMethod(method)) &#123;</span><br><span class="line">                <span class="keyword">return</span> platform.invokeDefaultMethod(method, service, proxy, args);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> loadMethodHandler(method).invoke(args);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>分析一下这个方法</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Utils.validateServiceInterface(service);</span><br></pre></td></tr></table></figure>
+
 <p>其实就是检查一下传入的 service 对象是不是一个接口，如果不是接口则抛出异常。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (validateEagerly) &#123;</span><br><span class="line">	eagerlyValidateMethods(service);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>如果 <code>ruguovalidateEagerly</code> 为 true ，则验证接口里的每一个方法，来看 <code>eagerlyValidateMethods()</code> 方法的定义：</p>
 <p><code>Retrofit.java$eagerlyValidateMethods()</code></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">eagerlyValidateMethods</span><span class="params">(Class&lt;?&gt; service)</span> </span>&#123;</span><br><span class="line">	Platform platform = Platform.get();</span><br><span class="line">    <span class="keyword">for</span> (Method method : service.getDeclaredMethods()) &#123;</span><br><span class="line">    	<span class="keyword">if</span> (!platform.isDefaultMethod(method)) &#123;</span><br><span class="line">        	loadMethodHandler(method);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>首先获取到平台，是<strong>接口内部可实现方法</strong>的 Java8 还是 Android。</p>
 <p>换言之，目前的 Android 平台下的话， <code>!platform.isDefaultMethod(method)</code> 会一直返回 true，也就是会为每一个接口方法加载一个 <code>MethodHandler</code>。</p>
 <p>而加载 <code>MethodHandler</code> 则采用了缓存机制。</p>
 <p><code>Retrofit.java$loadMethodHandler()</code></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">MethodHandler&lt;?&gt; loadMethodHandler(Method method) &#123;</span><br><span class="line">	MethodHandler&lt;?&gt; handler;</span><br><span class="line">    <span class="keyword">synchronized</span> (methodHandlerCache) &#123;</span><br><span class="line">    	handler = methodHandlerCache.get(method);</span><br><span class="line">        <span class="keyword">if</span> (handler == <span class="keyword">null</span>) &#123;</span><br><span class="line">        	handler = MethodHandler.create(<span class="keyword">this</span>, method);</span><br><span class="line">        	methodHandlerCache.put(method, handler);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> handler;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>这个 <code>MethodHandler</code> 也很关键，稍后再说，先回到我们的 <code>create()</code> 方法，这个方法最后返回了一个代理类。我们来看关键的 <code>invoke()</code> 方法</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (method.getDeclaringClass() == Object.class) &#123;</span><br><span class="line">	<span class="keyword">return</span> method.invoke(<span class="keyword">this</span>, args);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (platform.isDefaultMethod(method)) &#123;</span><br><span class="line">	<span class="keyword">return</span> platform.invokeDefaultMethod(method, service, proxy, args);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> loadMethodHandler(method).invoke(args);</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>如果方法调用来自于 <code>Object</code> ，比如 <code>hashCode()</code> , <code>equals()</code> 等，正常调用</li>
 <li>如果方法调用是调用接口的内部已经实现的方法，正常调用</li>
@@ -263,277 +214,96 @@
 </ul>
 <h3 id="MethodHandler-java-部分"><a href="#MethodHandler-java-部分" class="headerlink" title="MethodHandler.java 部分"></a><code>MethodHandler.java</code> 部分</h3><p>所以，我们需要查看 <code>MethodHandler.invoke(args)</code> 都做了啥，在此之前，先看看 <code>MethodHandler</code> 是如何创建的。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> MethodHandler&lt;?&gt; create(Retrofit retrofit, Method method) &#123;</span><br><span class="line">    CallAdapter&lt;Object&gt; callAdapter = (CallAdapter&lt;Object&gt;) createCallAdapter(method, retrofit);</span><br><span class="line">    Type responseType = callAdapter.responseType();</span><br><span class="line">    Converter&lt;ResponseBody, Object&gt; responseConverter =</span><br><span class="line">    			(Converter&lt;ResponseBody, Object&gt;) createResponseConverter(method, retrofit, responseType);</span><br><span class="line">    RequestFactory requestFactory = RequestFactoryParser.parse(method, responseType, retrofit);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> MethodHandler&lt;&gt;(retrofit, requestFactory, callAdapter, responseConverter);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>这里有初始化 <code>CallAdapter</code> , <code>Converter</code> 等，但不是目前的重点，重点是这一行</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RequestFactory requestFactory = RequestFactoryParser.parse(method, responseType, retrofit);</span><br></pre></td></tr></table></figure>
+
 <p>查看这个 <code>RequestFactoryParser.parse()</code> 方法的定义</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> RequestFactory <span class="title">parse</span><span class="params">(Method method, Type responseType, Retrofit retrofit)</span> </span>&#123;</span><br><span class="line">    RequestFactoryParser parser = <span class="keyword">new</span> RequestFactoryParser(method);</span><br><span class="line">    parser.parseMethodAnnotations(responseType);</span><br><span class="line">    parser.parseParameters(retrofit);</span><br><span class="line">    <span class="keyword">return</span> parser.toRequestFactory(retrofit.baseUrl());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>这里将 <code>method</code> 对象包含的信息（绝大多数信息是注解上的，如 <code>@GET(&#39;url&#39;)</code> ， <code>@Path(“id”) String id</code>）这些注解信息全部解析出来，赋值给了 <code>RequestFactory</code> 对象。</p>
 <p>最后再看 <code>MethodHandler.invoke()</code> 方法，这里会把<strong>请求的所有信息</strong>都交给 <code>callAdapter</code> 处理，最后返回一个 <code>Call</code> 对象，这个 <code>Call</code> 对象我理解为<strong>后台 API 调用</strong>这个动作，不知道是否有误，如果有误请指出。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Object <span class="title">invoke</span><span class="params">(Object... args)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> callAdapter.adapt(<span class="keyword">new</span> OkHttpCall&lt;&gt;(retrofit, requestFactory, responseConverter, args));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="一个栗子"><a href="#一个栗子" class="headerlink" title="一个栗子"></a>一个栗子</h3><p>借用 <a href="http://square.github.io/retrofit/" target="_blank" rel="noopener">官方文档</a> 的一个栗子:</p>
+
+<h3 id="一个栗子"><a href="#一个栗子" class="headerlink" title="一个栗子"></a>一个栗子</h3><p>借用 <a target="_blank" rel="noopener" href="http://square.github.io/retrofit/">官方文档</a> 的一个栗子:</p>
 <p>定义接口</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">GitHubService</span> </span>&#123;</span><br><span class="line">	<span class="meta">@GET</span>(<span class="string">"users/&#123;user&#125;/repos"</span>)</span><br><span class="line">    Call&lt;List&lt;Repo&gt;&gt; listRepos(<span class="meta">@Path</span>(<span class="string">"user"</span>) String user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">GitHubService</span> </span>&#123;</span><br><span class="line">	<span class="meta">@GET(&quot;users/&#123;user&#125;/repos&quot;)</span></span><br><span class="line">    Call&lt;List&lt;Repo&gt;&gt; listRepos(<span class="meta">@Path(&quot;user&quot;)</span> String user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>创建代理类</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Retrofit retrofit = <span class="keyword">new</span> Retrofit.Builder()</span><br><span class="line">    .baseUrl(<span class="string">"https://api.github.com/"</span>)</span><br><span class="line">    .build();</span><br><span class="line"></span><br><span class="line">GitHubService service = retrofit.create(GitHubService.class);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Retrofit retrofit = <span class="keyword">new</span> Retrofit.Builder()</span><br><span class="line">    .baseUrl(<span class="string">&quot;https://api.github.com/&quot;</span>)</span><br><span class="line">    .build();</span><br><span class="line"></span><br><span class="line">GitHubService service = retrofit.create(GitHubService.class);</span><br></pre></td></tr></table></figure>
+
 <p>所以我们可以将这里的 <code>service</code> 对象理解为</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Proxy.newProxyInstance(classLoader, <span class="keyword">new</span> Class&lt;?&gt;[] &#123;GitHubService.class&#125;, <span class="keyword">new</span> InvocationHandler()&#123;...&#125;)</span><br></pre></td></tr></table></figure>
+
 <p>的返回值。</p>
 <p>调用代理类的接口方法：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Call&lt;List&lt;Repo&gt;&gt; repos = service.listRepos(<span class="string">"octocat"</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Call&lt;List&lt;Repo&gt;&gt; repos = service.listRepos(<span class="string">&quot;octocat&quot;</span>);</span><br></pre></td></tr></table></figure>
+
 <p>这里的 <code>repos</code> 对象可以理解为</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Retrofit.loadMethodHandler(methodListRepos).invoke(<span class="keyword">new</span> Object[]&#123;<span class="string">"octocat"</span>&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Retrofit.loadMethodHandler(methodListRepos).invoke(<span class="keyword">new</span> Object[]&#123;<span class="string">&quot;octocat&quot;</span>&#125;);</span><br></pre></td></tr></table></figure>
+
 <p>的返回值。</p>
 <p>至于 <code>repos</code> 后续的处理，涉及太遥远，有心无力啊…因此不在本文讨论的范围内。</p>
 
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
         </div>
 
-        <blockquote class="post-copyright">
-    
-    <div class="content">
-        
-<span class="post-time">
-    Last updated: <time datetime="2018-12-14T03:07:29.000Z" itemprop="dateUpdated">2018-12-14 11:07:29</time>
-</span><br>
-
-
-        
     </div>
-    
-    <footer>
-        <a href="http://yoursite.com">
-            <img src="https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" alt="zhuangguangtuan">
-            zhuangguangtuan
-        </a>
-    </footer>
-</blockquote>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+        
+        
 
         
 
+        
 
-        <div class="post-footer">
-            
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
+        
 
+        
 
-            
-<div class="page-share-wrap">
-    
-
-<div class="page-share" id="pageShare">
-    <ul class="reset share-icons">
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2016/04/19/动态代理与retrofit/&title=《动态代理与Retrofit》 — grant&pic=https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2016/04/19/动态代理与retrofit/&title=《动态代理与Retrofit》 — grant&source=动态代理是什么
-PS：对于动态代理了解的同志可以跳过这一个 part
-
-大家都知道，retrofit 内部应用了动态代理技术，那么动态代理又是什么？以下来..." data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/04/19/动态代理与retrofit/" data-title=" Facebook">
-          <i class="icon icon-facebook"></i>
-        </a>
-      </li>
-      <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《动态代理与Retrofit》 — grant&url=http://yoursite.com/2016/04/19/动态代理与retrofit/&via=http://yoursite.com" data-title=" Twitter">
-          <i class="icon icon-twitter"></i>
-        </a>
-      </li>
-      <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2016/04/19/动态代理与retrofit/" data-title=" Google+">
-          <i class="icon icon-google-plus"></i>
-        </a>
-      </li>
     </ul>
- </div>
-
-
-
-    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
-        <i class="icon icon-share-alt icon-lg"></i>
-    </a>
-</div>
-
-
-
-        </div>
-    </div>
-
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/2016/05/26/使用nexus搭建maven仓库/" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">使用nexus搭建maven仓库</h4>
-      </a>
-    </div>
-  
-
-  
-    <div class="waves-block waves-effect next">
-      <a href="/2016/01/22/hello_android_data_binding/" id="post-next" class="post-nav-link">
-        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">Android DataBinding 笔记</h4>
-      </a>
-    </div>
-  
-</nav>
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</article>
-
-
-
-</div>
-
-        <footer class="footer">
-    <div class="top">
-        
-<p>
-    <span id="busuanzi_container_site_uv" style="display:none">
-        站点总访客数：<span id="busuanzi_value_site_uv"></span>
-    </span>
-    <span id="busuanzi_container_site_pv" style="display:none">
-        站点总访问量：<span id="busuanzi_value_site_pv"></span>
-    </span>
-</p>
-
-
-        <p>
-            
-            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
-        </p>
-    </div>
-    <div class="bottom">
-        <p><span>zhuangguangtuan &copy; 2015 - 2020</span>
-            <span>
-                
-                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
-            </span>
-        </p>
-    </div>
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>  Theme <a target="_blank" rel="noopener" href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
 </footer>
 
-    </main>
-    <div class="mask" id="mask"></div>
-<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
-
-
-
-<div class="global-share" id="globalShare">
-    <ul class="reset share-icons">
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2016/04/19/动态代理与retrofit/&title=《动态代理与Retrofit》 — grant&pic=https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2016/04/19/动态代理与retrofit/&title=《动态代理与Retrofit》 — grant&source=动态代理是什么
-PS：对于动态代理了解的同志可以跳过这一个 part
-
-大家都知道，retrofit 内部应用了动态代理技术，那么动态代理又是什么？以下来..." data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/04/19/动态代理与retrofit/" data-title=" Facebook">
-          <i class="icon icon-facebook"></i>
-        </a>
-      </li>
-      <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《动态代理与Retrofit》 — grant&url=http://yoursite.com/2016/04/19/动态代理与retrofit/&via=http://yoursite.com" data-title=" Twitter">
-          <i class="icon icon-twitter"></i>
-        </a>
-      </li>
-      <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2016/04/19/动态代理与retrofit/" data-title=" Google+">
-          <i class="icon icon-google-plus"></i>
-        </a>
-      </li>
-    </ul>
- </div>
-
-
-<div class="page-modal wx-share" id="wxShare">
-    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2016/04/19/动态代理与retrofit/" alt="微信分享二维码">
-</div>
-
-
-
-
-    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
-<script>
-var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
-
-
-</script>
-
-<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
-
-
-
-
-
-
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-
-<script>
-(function() {
-    var OriginTitile = document.title, titleTime;
-    document.addEventListener('visibilitychange', function() {
-        if (document.hidden) {
-            document.title = 'grant's blog';
-            clearTimeout(titleTime);
-        } else {
-            document.title = 'grant's blog';
-            titleTime = setTimeout(function() {
-                document.title = OriginTitile;
-            },2000);
-        }
-    });
-})();
-</script>
 
 
 
 </body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = ""
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="/js/index.js"></script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
 </html>

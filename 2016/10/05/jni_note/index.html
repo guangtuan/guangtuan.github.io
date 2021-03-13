@@ -1,185 +1,162 @@
 <!DOCTYPE html>
-<html>
-<head><meta name="generator" content="Hexo 3.8.0">
-    
-
-    
-
-    
-
-
-
+<html lang="en">
+<head>
     <meta charset="utf-8">
-    
-    
-    
-    
-    <title>jni 笔记 | grant | not today</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    
-    <meta name="theme-color" content="#3F51B5">
-    
-    
-    <meta name="keywords" content="android,jni">
-    <meta name="description" content="最近项目中的蓝牙通讯部分，需要对数据进行加解密，使用到了 jni 技术，这是我第一次使用 jni 技术，这篇文章记录一下 jni 的一些知识点。">
-<meta name="keywords" content="android,jni">
-<meta property="og:type" content="article">
-<meta property="og:title" content="jni 笔记">
-<meta property="og:url" content="http://yoursite.com/2016/10/05/jni_note/index.html">
-<meta property="og:site_name" content="grant">
-<meta property="og:description" content="最近项目中的蓝牙通讯部分，需要对数据进行加解密，使用到了 jni 技术，这是我第一次使用 jni 技术，这篇文章记录一下 jni 的一些知识点。">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-14T03:06:48.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="jni 笔记">
-<meta name="twitter:description" content="最近项目中的蓝牙通讯部分，需要对数据进行加解密，使用到了 jni 技术，这是我第一次使用 jni 技术，这篇文章记录一下 jni 的一些知识点。">
-    
-    <link rel="shortcut icon" href="/favicon.ico">
-    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
-    <script>window.lazyScripts=[]</script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="zhuangguangtuan&#39;s blog">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <!-- custom head -->
-    
+    <title>
+        
+        jni 笔记 - undefined
+        
+    </title>
 
-</head>
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/aircloud.css">
+
+    
+<link rel="stylesheet" href="/css/gitment.css">
+
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
 
 <body>
-    <div id="loading" class="active"></div>
 
-    <aside id="menu" class="hide">
-  <div class="inner flex-row-vertical">
-    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
-        <i class="icon icon-lg icon-close"></i>
-    </a>
-    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
-      <div class="brand">
-        <a href="/" class="avatar waves-effect waves-circle waves-light">
-          <img src="https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4">
-        </a>
-        <hgroup class="introduce">
-          <h5 class="nickname">zhuangguangtuan</h5>
-          <a href="mailto:zhuangguangtuan@gmail.com" title="zhuangguangtuan@gmail.com" class="mail">zhuangguangtuan@gmail.com</a>
-        </hgroup>
-      </div>
-    </div>
-    <div class="scroll-wrap flex-col">
-      <ul class="nav">
-        
-            <li class="waves-block waves-effect">
-              <a href="/">
-                <i class="icon icon-lg icon-home"></i>
-                Home
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/archives">
-                <i class="icon icon-lg icon-archives"></i>
-                Archives
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/tags">
-                <i class="icon icon-lg icon-tags"></i>
-                Tags
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="https://github.com/guangtuan" target="_blank">
-                <i class="icon icon-lg icon-github"></i>
-                Github
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/about">
-                <i class="icon icon-lg icon-file"></i>
-                About
-              </a>
-            </li>
-        
-      </ul>
-    </div>
-  </div>
-</aside>
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
 
-    <main id="main">
-        <header class="top-header" id="header">
-    <div class="flex-row">
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
-          <i class="icon icon-lg icon-navicon"></i>
-        </a>
-        <div class="flex-col header-title ellipsis">jni 笔记</div>
-        
-        
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
-            <i class="icon icon-lg icon-share-alt"></i>
-        </a>
-        
-    </div>
-</header>
-<header class="content-header post-header">
+<div class="index-about">
+    <i> not today </i>
+</div>
 
-    <div class="container fade-scale">
-        <h1 class="title">jni 笔记</h1>
-        <h5 class="subtitle">
-            
-                <time datetime="2016-10-05T12:58:31.000Z" itemprop="datePublished" class="page-time">
-  2016-10-05
-</time>
-
-
-            
-        </h5>
-    </div>
-
+<div class="index-container">
     
-
-
-</header>
-
-
-<div class="container body-wrap">
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar ">
+            <img src="/img/avatar.png" />
+        </div>
+        <div class="name">
+            <i>zhuangguangtuan</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>HOME</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>TAGS</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>ARCHIVES</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>ABOUT</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
     
-
-<article id="post-jni_note" class="post-article article-type-post fade" itemprop="blogPost">
-
-    <div class="post-card">
-        <h1 class="post-card-title">jni 笔记</h1>
-        <div class="post-meta">
-            <time class="post-time" title="2016-10-05 20:58:31" datetime="2016-10-05T12:58:31.000Z" itemprop="datePublished">2016-10-05</time>
-
-            
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8-Android-Studio-2-2-%E4%B8%AD%E8%BF%9B%E8%A1%8C-jni-%E5%BC%80%E5%8F%91"><span class="toc-text">在 Android Studio 2.2 中进行 jni 开发</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#c-%E5%92%8C-java-%E4%BA%92%E7%9B%B8%E8%B0%83%E7%94%A8%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="toc-text">c 和 java 互相调用，数据类型的转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E4%BA%86-so-%E5%BA%93%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%89%E8%A3%85%E5%8C%85%E7%98%A6%E8%BA%AB"><span class="toc-text">使用了 so 库的应用安装包瘦身</span></a></li></ol>
+</div>
+    
+</div>
 
 
-            
-<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
-    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
-</span>
-
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">search</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
 
         </div>
-        <div class="post-content" id="post-content" itemprop="postContent">
-            <p>最近项目中的蓝牙通讯部分，需要对数据进行加解密，使用到了 jni 技术，这是我第一次使用 jni 技术，这篇文章记录一下 jni 的一些知识点。</p>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> not today </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        jni 笔记
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">Post：<span>2016-10-05 20:58:31</span></span>
+        
+        <span class="attr">Tags：/
+        
+        <a class="tag" href="/tags/#android" title="android">android</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#jni" title="jni">jni</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">Visit：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <p>最近项目中的蓝牙通讯部分，需要对数据进行加解密，使用到了 jni 技术，这是我第一次使用 jni 技术，这篇文章记录一下 jni 的一些知识点。</p>
 <a id="more"></a>
+
 <ul>
 <li>工具篇，在 Android Studio 2.2 中进行 jni 开发。</li>
 <li>代码篇，c 和 java 互相调用，数据类型的转换。</li>
 <li>打包篇，使用了 so 库的应用安装包瘦身。</li>
 </ul>
-<h2 id="在-Android-Studio-2-2-中进行-jni-开发"><a href="#在-Android-Studio-2-2-中进行-jni-开发" class="headerlink" title="在 Android Studio 2.2 中进行 jni 开发"></a>在 Android Studio 2.2 中进行 jni 开发</h2><p>在 Android Studio 2.2 中进行 jni 开发，可以参考 <a href="http://blog.csdn.net/wl9739/article/details/52607010" target="_blank" rel="noopener">这篇文章</a>，Android Studio 2.2 使用的是 CMake 或者 NDK 作为构建工具，编译后的 so 文件类似于 jar/aar 文件，可以直接在项目中引用。</p>
+<h2 id="在-Android-Studio-2-2-中进行-jni-开发"><a href="#在-Android-Studio-2-2-中进行-jni-开发" class="headerlink" title="在 Android Studio 2.2 中进行 jni 开发"></a>在 Android Studio 2.2 中进行 jni 开发</h2><p>在 Android Studio 2.2 中进行 jni 开发，可以参考 <a target="_blank" rel="noopener" href="http://blog.csdn.net/wl9739/article/details/52607010">这篇文章</a>，Android Studio 2.2 使用的是 CMake 或者 NDK 作为构建工具，编译后的 so 文件类似于 jar/aar 文件，可以直接在项目中引用。</p>
 <p>如 <code>com.hello.jni.Foo.java</code> 中的 <code>public native void bar()</code> 方法在 c 的 .h 文件中声明为<code>void java_com_hello.jni_Foo_bar()</code>，只需要在 .c 或者 .cpp 中实现这个方法即可，在 .h 文件中声明类似于在 java 的接口中声明方法，便于复用一些 common 部分。</p>
 <p>需要注意的是，c 里面的值调用，地址调用，引用调用和 java 中传参还是存在差别的。</p>
-<h2 id="c-和-java-互相调用，数据类型的转换"><a href="#c-和-java-互相调用，数据类型的转换" class="headerlink" title="c 和 java 互相调用，数据类型的转换"></a>c 和 java 互相调用，数据类型的转换</h2><p>关于 java 和 c 代码之间的相互调用，数据类型的转换，查看 <a href="http://blog.csdn.net/xyang81/article/details/42582213" target="_blank" rel="noopener">这篇文章</a>。</p>
-<h2 id="使用了-so-库的应用安装包瘦身"><a href="#使用了-so-库的应用安装包瘦身" class="headerlink" title="使用了 so 库的应用安装包瘦身"></a>使用了 so 库的应用安装包瘦身</h2><p>Android 支持很多 ABI 类型，在 <a href="http://www.jianshu.com/p/cb05698a1968" target="_blank" rel="noopener">这篇文章</a> 里有提到。</p>
+<h2 id="c-和-java-互相调用，数据类型的转换"><a href="#c-和-java-互相调用，数据类型的转换" class="headerlink" title="c 和 java 互相调用，数据类型的转换"></a>c 和 java 互相调用，数据类型的转换</h2><p>关于 java 和 c 代码之间的相互调用，数据类型的转换，查看 <a target="_blank" rel="noopener" href="http://blog.csdn.net/xyang81/article/details/42582213">这篇文章</a>。</p>
+<h2 id="使用了-so-库的应用安装包瘦身"><a href="#使用了-so-库的应用安装包瘦身" class="headerlink" title="使用了 so 库的应用安装包瘦身"></a>使用了 so 库的应用安装包瘦身</h2><p>Android 支持很多 ABI 类型，在 <a target="_blank" rel="noopener" href="http://www.jianshu.com/p/cb05698a1968">这篇文章</a> 里有提到。</p>
 <blockquote>
 <p>Android系统目前支持以下七种不同的CPU架构：ARMv5，ARMv7 (从2010年起)，x86 (从2011年起)，MIPS (从2012年起)，ARMv8，MIPS64和x86_64 (从2014年起)，每一种都关联着一个相应的ABI。</p>
 </blockquote>
 <p>如果存在应用安装包瘦身的需求，可以采用动态加载的方式加载 so 库，整体思路是</p>
 <p>1 获取手机支持的 ABI 类型<br>2 从服务器上下载对应的 so 库<br>3 加载 so 库</p>
-<p>详细查看 <a href="https://segmentfault.com/a/1190000004062899" target="_blank" rel="noopener">这篇文章</a>。</p>
+<p>详细查看 <a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000004062899">这篇文章</a>。</p>
 <p>原理：</p>
 <blockquote>
 <p>Android 包管理器安装 APK 时，会自动选择 APK 包中为对应系统 ABI 预编译好的 .so 文件，如果在对应的 lib/ABI 目录中存在 .so 文件的话。</p>
@@ -191,250 +168,66 @@
 <p>那么，其他的五个 so 库实际上是多余的，如果能够从安装包中去掉多余的五个 so 库，就可以达到为 APK 瘦身的目的。</p>
 </blockquote>
 <p>我们如何得知系统支持何种 ABI 架构？使用 Android 自带的 API 即可。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@TargetApi</span>(Build.VERSION_CODES.LOLLIPOP)</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">getSupportABIS</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String[] supportedAbis = Build.SUPPORTED_ABIS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@TargetApi(Build.VERSION_CODES.LOLLIPOP)</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">getSupportABIS</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String[] supportedAbis = Build.SUPPORTED_ABIS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
         </div>
 
-        <blockquote class="post-copyright">
-    
-    <div class="content">
-        
-<span class="post-time">
-    Last updated: <time datetime="2018-12-14T03:06:48.000Z" itemprop="dateUpdated">2018-12-14 11:06:48</time>
-</span><br>
-
-
-        
     </div>
-    
-    <footer>
-        <a href="http://yoursite.com">
-            <img src="https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" alt="zhuangguangtuan">
-            zhuangguangtuan
-        </a>
-    </footer>
-</blockquote>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+        
+        
 
         
 
+        
 
-        <div class="post-footer">
-            
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jni/">jni</a></li></ul>
+        
 
+        
 
-            
-<div class="page-share-wrap">
-    
-
-<div class="page-share" id="pageShare">
-    <ul class="reset share-icons">
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2016/10/05/jni_note/&title=《jni 笔记》 — grant&pic=https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2016/10/05/jni_note/&title=《jni 笔记》 — grant&source=最近项目中的蓝牙通讯部分，需要对数据进行加解密，使用到了 jni 技术，这是我第一次使用 jni 技术，这篇文章记录一下 jni 的一些知识点。" data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/10/05/jni_note/" data-title=" Facebook">
-          <i class="icon icon-facebook"></i>
-        </a>
-      </li>
-      <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《jni 笔记》 — grant&url=http://yoursite.com/2016/10/05/jni_note/&via=http://yoursite.com" data-title=" Twitter">
-          <i class="icon icon-twitter"></i>
-        </a>
-      </li>
-      <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2016/10/05/jni_note/" data-title=" Google+">
-          <i class="icon icon-google-plus"></i>
-        </a>
-      </li>
     </ul>
- </div>
-
-
-
-    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
-        <i class="icon icon-share-alt icon-lg"></i>
-    </a>
-</div>
-
-
-
-        </div>
-    </div>
-
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/2016/10/16/server_safe_note/" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">服务器安全笔记</h4>
-      </a>
-    </div>
-  
-
-  
-    <div class="waves-block waves-effect next">
-      <a href="/2016/05/26/使用nexus搭建maven仓库/" id="post-next" class="post-nav-link">
-        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">使用nexus搭建maven仓库</h4>
-      </a>
-    </div>
-  
-</nav>
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</article>
-
-
-
-</div>
-
-        <footer class="footer">
-    <div class="top">
-        
-<p>
-    <span id="busuanzi_container_site_uv" style="display:none">
-        站点总访客数：<span id="busuanzi_value_site_uv"></span>
-    </span>
-    <span id="busuanzi_container_site_pv" style="display:none">
-        站点总访问量：<span id="busuanzi_value_site_pv"></span>
-    </span>
-</p>
-
-
-        <p>
-            
-            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
-        </p>
-    </div>
-    <div class="bottom">
-        <p><span>zhuangguangtuan &copy; 2015 - 2020</span>
-            <span>
-                
-                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
-            </span>
-        </p>
-    </div>
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>  Theme <a target="_blank" rel="noopener" href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
 </footer>
 
-    </main>
-    <div class="mask" id="mask"></div>
-<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
-
-
-
-<div class="global-share" id="globalShare">
-    <ul class="reset share-icons">
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2016/10/05/jni_note/&title=《jni 笔记》 — grant&pic=https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2016/10/05/jni_note/&title=《jni 笔记》 — grant&source=最近项目中的蓝牙通讯部分，需要对数据进行加解密，使用到了 jni 技术，这是我第一次使用 jni 技术，这篇文章记录一下 jni 的一些知识点。" data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/10/05/jni_note/" data-title=" Facebook">
-          <i class="icon icon-facebook"></i>
-        </a>
-      </li>
-      <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《jni 笔记》 — grant&url=http://yoursite.com/2016/10/05/jni_note/&via=http://yoursite.com" data-title=" Twitter">
-          <i class="icon icon-twitter"></i>
-        </a>
-      </li>
-      <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2016/10/05/jni_note/" data-title=" Google+">
-          <i class="icon icon-google-plus"></i>
-        </a>
-      </li>
-    </ul>
- </div>
-
-
-<div class="page-modal wx-share" id="wxShare">
-    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2016/10/05/jni_note/" alt="微信分享二维码">
-</div>
-
-
-
-
-    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
-<script>
-var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
-
-
-</script>
-
-<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
-
-
-
-
-
-
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-
-<script>
-(function() {
-    var OriginTitile = document.title, titleTime;
-    document.addEventListener('visibilitychange', function() {
-        if (document.hidden) {
-            document.title = 'grant's blog';
-            clearTimeout(titleTime);
-        } else {
-            document.title = 'grant's blog';
-            titleTime = setTimeout(function() {
-                document.title = OriginTitile;
-            },2000);
-        }
-    });
-})();
-</script>
 
 
 
 </body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = ""
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="/js/index.js"></script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
 </html>

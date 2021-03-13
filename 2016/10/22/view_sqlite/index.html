@@ -1,432 +1,228 @@
 <!DOCTYPE html>
-<html>
-<head><meta name="generator" content="Hexo 3.8.0">
-    
-
-    
-
-    
-
-
-
+<html lang="en">
+<head>
     <meta charset="utf-8">
-    
-    
-    
-    
-    <title>Android SQLite 工具记录 | grant | not today</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    
-    <meta name="theme-color" content="#3F51B5">
-    
-    
-    <meta name="keywords" content="android,tools">
-    <meta name="description" content="Android 中常用的数据库是 SQLite，记录一下常用的 debug 方法。">
-<meta name="keywords" content="android,tools">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Android SQLite 工具记录">
-<meta property="og:url" content="http://yoursite.com/2016/10/22/view_sqlite/index.html">
-<meta property="og:site_name" content="grant">
-<meta property="og:description" content="Android 中常用的数据库是 SQLite，记录一下常用的 debug 方法。">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-14T03:05:30.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android SQLite 工具记录">
-<meta name="twitter:description" content="Android 中常用的数据库是 SQLite，记录一下常用的 debug 方法。">
-    
-    <link rel="shortcut icon" href="/favicon.ico">
-    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
-    <script>window.lazyScripts=[]</script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="zhuangguangtuan&#39;s blog">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <!-- custom head -->
-    
+    <title>
+        
+        Android SQLite 工具记录 - undefined
+        
+    </title>
 
-</head>
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/aircloud.css">
+
+    
+<link rel="stylesheet" href="/css/gitment.css">
+
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
 
 <body>
-    <div id="loading" class="active"></div>
 
-    <aside id="menu" class="hide">
-  <div class="inner flex-row-vertical">
-    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
-        <i class="icon icon-lg icon-close"></i>
-    </a>
-    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
-      <div class="brand">
-        <a href="/" class="avatar waves-effect waves-circle waves-light">
-          <img src="https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4">
-        </a>
-        <hgroup class="introduce">
-          <h5 class="nickname">zhuangguangtuan</h5>
-          <a href="mailto:zhuangguangtuan@gmail.com" title="zhuangguangtuan@gmail.com" class="mail">zhuangguangtuan@gmail.com</a>
-        </hgroup>
-      </div>
-    </div>
-    <div class="scroll-wrap flex-col">
-      <ul class="nav">
-        
-            <li class="waves-block waves-effect">
-              <a href="/">
-                <i class="icon icon-lg icon-home"></i>
-                Home
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/archives">
-                <i class="icon icon-lg icon-archives"></i>
-                Archives
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/tags">
-                <i class="icon icon-lg icon-tags"></i>
-                Tags
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="https://github.com/guangtuan" target="_blank">
-                <i class="icon icon-lg icon-github"></i>
-                Github
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/about">
-                <i class="icon icon-lg icon-file"></i>
-                About
-              </a>
-            </li>
-        
-      </ul>
-    </div>
-  </div>
-</aside>
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
 
-    <main id="main">
-        <header class="top-header" id="header">
-    <div class="flex-row">
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
-          <i class="icon icon-lg icon-navicon"></i>
-        </a>
-        <div class="flex-col header-title ellipsis">Android SQLite 工具记录</div>
-        
-        
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
-            <i class="icon icon-lg icon-share-alt"></i>
-        </a>
-        
-    </div>
-</header>
-<header class="content-header post-header">
+<div class="index-about">
+    <i> not today </i>
+</div>
 
-    <div class="container fade-scale">
-        <h1 class="title">Android SQLite 工具记录</h1>
-        <h5 class="subtitle">
-            
-                <time datetime="2016-10-21T20:10:50.000Z" itemprop="datePublished" class="page-time">
-  2016-10-22
-</time>
-
-
-            
-        </h5>
-    </div>
-
+<div class="index-container">
     
-
-
-</header>
-
-
-<div class="container body-wrap">
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar ">
+            <img src="/img/avatar.png" />
+        </div>
+        <div class="name">
+            <i>zhuangguangtuan</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>HOME</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>TAGS</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>ARCHIVES</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>ABOUT</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
     
-
-<article id="post-view_sqlite" class="post-article article-type-post fade" itemprop="blogPost">
-
-    <div class="post-card">
-        <h1 class="post-card-title">Android SQLite 工具记录</h1>
-        <div class="post-meta">
-            <time class="post-time" title="2016-10-22 04:10:50" datetime="2016-10-21T20:10:50.000Z" itemprop="datePublished">2016-10-22</time>
-
-            
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#DB-Browser-for-SQLite"><span class="toc-text">DB Browser for SQLite</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#facebook-%E7%A5%9E%E5%99%A8-Stetho"><span class="toc-text">facebook 神器 Stetho</span></a></li></ol>
+</div>
+    
+</div>
 
 
-            
-<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
-    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
-</span>
-
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">search</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
 
         </div>
-        <div class="post-content" id="post-content" itemprop="postContent">
-            <p>Android 中常用的数据库是 SQLite，记录一下常用的 debug 方法。</p>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> not today </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        Android SQLite 工具记录
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">Post：<span>2016-10-22 04:10:50</span></span>
+        
+        <span class="attr">Tags：/
+        
+        <a class="tag" href="/tags/#android" title="android">android</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#tools" title="tools">tools</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">Visit：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <p>Android 中常用的数据库是 SQLite，记录一下常用的 debug 方法。</p>
 <a id="more"></a>
-<h3 id="DB-Browser-for-SQLite"><a href="#DB-Browser-for-SQLite" class="headerlink" title="DB Browser for SQLite"></a>DB Browser for SQLite</h3><p>类似于 mysql 的 workbench，<a href="http://sqlitebrowser.org/" target="_blank" rel="noopener">官网</a> 提供各种 Windows OSX linux 等平台的下载。</p>
+
+<h3 id="DB-Browser-for-SQLite"><a href="#DB-Browser-for-SQLite" class="headerlink" title="DB Browser for SQLite"></a>DB Browser for SQLite</h3><p>类似于 mysql 的 workbench，<a target="_blank" rel="noopener" href="http://sqlitebrowser.org/">官网</a> 提供各种 Windows OSX linux 等平台的下载。</p>
 <p>Android 的数据库文件，如果未指定的话，默认存储在 <code>/data/data/com.packageName/databases/fileName.db</code></p>
 <p>将这个文件 copy 出来，即可用 DB Browser for SQLite 打开。</p>
 <ul>
-<li><p>但是现在的手机 root 的越来越少，权限管理机制也越来越完善， copy 这个文件比较麻烦，推荐 <a href="http://www.wandoujia.com/apps/com.speedsoftware.rootexplorer" target="_blank" rel="noopener">RE 文件管理器</a>，一般情况- 下还是可以 copy 出来的。</p>
+<li><p>但是现在的手机 root 的越来越少，权限管理机制也越来越完善， copy 这个文件比较麻烦，推荐 <a target="_blank" rel="noopener" href="http://www.wandoujia.com/apps/com.speedsoftware.rootexplorer">RE 文件管理器</a>，一般情况- 下还是可以 copy 出来的。</p>
 </li>
 <li><p>如果是模拟器或者 root 过后的机器，可以直接在 Android Device Monitor 中找到这个文件 copy 出来，或者是命令行。</p>
 </li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb pull /data/data/com.packageName/databases/fileName.db</span><br></pre></td></tr></table></figure>
+
 <h3 id="facebook-神器-Stetho"><a href="#facebook-神器-Stetho" class="headerlink" title="facebook 神器 Stetho"></a>facebook 神器 Stetho</h3><p>这个库不仅仅是用来查看 SQLite 情况的，网路请求，Realm（一种工作在 native 层，不同于 SQLite 的数据库）等都可以使用这个库查看。</p>
-<p><a href="http://facebook.github.io/stetho/" target="_blank" rel="noopener">官网地址</a></p>
+<p><a target="_blank" rel="noopener" href="http://facebook.github.io/stetho/">官网地址</a></p>
 <p>如果仅仅是用来查看 SQLite 文件的话，添加以下依赖。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    compile &apos;com.facebook.stetho:stetho:1.4.1&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    compile &#39;com.facebook.stetho:stetho:1.4.1&#39;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>初始化</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stetho.initializeWithDefaults(context);</span><br></pre></td></tr></table></figure>
+
 <p>在应用运行的时候，打开 chrome 浏览器 –&gt; 地址栏输入 <strong>chrome://inspect</strong> –&gt; Device –&gt; 找到你的设备 –&gt; 点击 inspect –&gt; Web SQL</p>
 <p>即可浏览数据库中的内容。</p>
 <p>这个浏览是实时的，在表格的最下面有一个刷新按钮，刷新之后可以查看最新的数据库内容。</p>
 
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
         </div>
 
-        <blockquote class="post-copyright">
-    
-    <div class="content">
-        
-<span class="post-time">
-    Last updated: <time datetime="2018-12-14T03:05:30.000Z" itemprop="dateUpdated">2018-12-14 11:05:30</time>
-</span><br>
-
-
-        
     </div>
-    
-    <footer>
-        <a href="http://yoursite.com">
-            <img src="https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" alt="zhuangguangtuan">
-            zhuangguangtuan
-        </a>
-    </footer>
-</blockquote>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+        
+        
 
         
 
+        
 
-        <div class="post-footer">
-            
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
+        
 
+        
 
-            
-<div class="page-share-wrap">
-    
-
-<div class="page-share" id="pageShare">
-    <ul class="reset share-icons">
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2016/10/22/view_sqlite/&title=《Android SQLite 工具记录》 — grant&pic=https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2016/10/22/view_sqlite/&title=《Android SQLite 工具记录》 — grant&source=Android 中常用的数据库是 SQLite，记录一下常用的 debug 方法。" data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/10/22/view_sqlite/" data-title=" Facebook">
-          <i class="icon icon-facebook"></i>
-        </a>
-      </li>
-      <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android SQLite 工具记录》 — grant&url=http://yoursite.com/2016/10/22/view_sqlite/&via=http://yoursite.com" data-title=" Twitter">
-          <i class="icon icon-twitter"></i>
-        </a>
-      </li>
-      <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2016/10/22/view_sqlite/" data-title=" Google+">
-          <i class="icon icon-google-plus"></i>
-        </a>
-      </li>
     </ul>
- </div>
-
-
-
-    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
-        <i class="icon icon-share-alt icon-lg"></i>
-    </a>
-</div>
-
-
-
-        </div>
-    </div>
-
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/2016/10/29/android bit map note/" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">android 加载图片开发笔记</h4>
-      </a>
-    </div>
-  
-
-  
-    <div class="waves-block waves-effect next">
-      <a href="/2016/10/16/server_safe_note/" id="post-next" class="post-nav-link">
-        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">服务器安全笔记</h4>
-      </a>
-    </div>
-  
-</nav>
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</article>
-
-
-
-</div>
-
-        <footer class="footer">
-    <div class="top">
-        
-<p>
-    <span id="busuanzi_container_site_uv" style="display:none">
-        站点总访客数：<span id="busuanzi_value_site_uv"></span>
-    </span>
-    <span id="busuanzi_container_site_pv" style="display:none">
-        站点总访问量：<span id="busuanzi_value_site_pv"></span>
-    </span>
-</p>
-
-
-        <p>
-            
-            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
-        </p>
-    </div>
-    <div class="bottom">
-        <p><span>zhuangguangtuan &copy; 2015 - 2020</span>
-            <span>
-                
-                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
-            </span>
-        </p>
-    </div>
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>  Theme <a target="_blank" rel="noopener" href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
 </footer>
 
-    </main>
-    <div class="mask" id="mask"></div>
-<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
-
-
-
-<div class="global-share" id="globalShare">
-    <ul class="reset share-icons">
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2016/10/22/view_sqlite/&title=《Android SQLite 工具记录》 — grant&pic=https://avatars0.githubusercontent.com/u/5930134?s=400&u=5a75478782eb67a859a1fa4a25d8d42790d50f64&v=4" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2016/10/22/view_sqlite/&title=《Android SQLite 工具记录》 — grant&source=Android 中常用的数据库是 SQLite，记录一下常用的 debug 方法。" data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/10/22/view_sqlite/" data-title=" Facebook">
-          <i class="icon icon-facebook"></i>
-        </a>
-      </li>
-      <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android SQLite 工具记录》 — grant&url=http://yoursite.com/2016/10/22/view_sqlite/&via=http://yoursite.com" data-title=" Twitter">
-          <i class="icon icon-twitter"></i>
-        </a>
-      </li>
-      <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2016/10/22/view_sqlite/" data-title=" Google+">
-          <i class="icon icon-google-plus"></i>
-        </a>
-      </li>
-    </ul>
- </div>
-
-
-<div class="page-modal wx-share" id="wxShare">
-    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2016/10/22/view_sqlite/" alt="微信分享二维码">
-</div>
-
-
-
-
-    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
-<script>
-var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
-
-
-</script>
-
-<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
-
-
-
-
-
-
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-
-<script>
-(function() {
-    var OriginTitile = document.title, titleTime;
-    document.addEventListener('visibilitychange', function() {
-        if (document.hidden) {
-            document.title = 'grant's blog';
-            clearTimeout(titleTime);
-        } else {
-            document.title = 'grant's blog';
-            titleTime = setTimeout(function() {
-                document.title = OriginTitile;
-            },2000);
-        }
-    });
-})();
-</script>
 
 
 
 </body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = ""
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="/js/index.js"></script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
 </html>
